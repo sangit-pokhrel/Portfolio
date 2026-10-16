@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { site } from "@/content/site";
 import { getLenis, scrollToTarget } from "@/lib/smooth";
 import { Art, Roll } from "./ui";
+import Logo from "./Logo";
 
 const LINKS = [
   { href: "#top", label: "Home" },
@@ -62,8 +63,7 @@ export default function Nav() {
       <header className="nav" data-nav>
         <div className="nav-inner">
           <a href="#top" className="nav-brand" aria-label={`${site.firstName} ${site.logo.aka} ${site.logo.bottom} — home`} onClick={(e) => go(e, "#top")}>
-            <span className="logo-top">{site.logo.top}</span>
-            <span className="logo-bottom"><em>{site.logo.aka}</em>{site.logo.bottom}</span>
+            <Logo />
           </a>
           <div className="nav-btns">
             <a className="btn-w is-nav" href={site.resumeUrl}>

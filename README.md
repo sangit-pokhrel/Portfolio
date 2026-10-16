@@ -1,5 +1,7 @@
 # Sangit aka Music — Portfolio
 
+> **Updating content?** See the step-by-step [Editing guide](docs/EDITING-GUIDE.md): project covers, links, photos, voice story, colours.
+
 Next.js (App Router) + GSAP/ScrollTrigger + Lenis + Three.js.
 
 ```bash

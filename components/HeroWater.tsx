@@ -120,7 +120,7 @@ export default function HeroWater() {
         const baseline = rect.y + (lh * dpr - (asc + desc)) / 2 + asc;
         const cx = rect.x + rect.z / 2;
         const text = (spans[i].textContent ?? "").toUpperCase();
-        if (line.classList.contains("is-outline")) {
+        if (line.classList.contains("is-serif")) {
           tg.lineWidth = 2 * dpr; tg.strokeStyle = stroke; tg.strokeText(text, cx, baseline);
         } else {
           tg.fillStyle = fill; tg.fillText(text, cx, baseline);

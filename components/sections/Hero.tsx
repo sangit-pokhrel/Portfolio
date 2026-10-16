@@ -11,7 +11,7 @@ export default function Hero() {
       <section className="hero">
         <h1 className="hero-name" aria-label={`${site.firstName} ${site.lastName}`}>
           <span className="hero-name-line"><span>{site.firstName}</span></span>
-          <span className="hero-name-line is-outline"><span>{site.lastName}</span></span>
+          <span className="hero-name-line is-serif"><span>{site.lastName}</span></span>
         </h1>
         <HeroWater />
         {src && site.portrait.mode === "2d" && (

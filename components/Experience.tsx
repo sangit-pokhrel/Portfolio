@@ -57,9 +57,10 @@ export default function Experience() {
       const first = $(".hero-name-line:first-child");
       fit(first, 0.94, 0.26);
       const firstPx = parseFloat(first.style.fontSize);
-      const second = $(".hero-name-line.is-outline");
-      second.style.fontSize = firstPx * 0.62 + "px";
-      fit(second, 0.9, (firstPx * 0.62) / window.innerWidth);
+      const second = $(".hero-name-line.is-serif");
+      // serif second line: smaller than SANGIT so the name reads in order
+      second.style.fontSize = firstPx * 0.5 + "px";
+      fit(second, window.innerWidth < 768 ? 0.86 : 0.64, (firstPx * 0.5) / window.innerWidth);
       // let the water layer re-draw the name at its new size
       const hero = document.querySelector<HTMLElement>(".hero");
       if (hero) hero.dataset.fitted = "1";
