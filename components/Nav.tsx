@@ -6,6 +6,7 @@ import { site } from "@/content/site";
 import { getLenis, scrollToTarget } from "@/lib/smooth";
 import { Art, Roll } from "./ui";
 import Logo from "./Logo";
+import DocButton from "./DocButton";
 
 const LINKS = [
   { href: "#top", label: "Home" },
@@ -66,10 +67,14 @@ export default function Nav() {
             <Logo />
           </a>
           <div className="nav-btns">
-            <a className="btn-w is-nav" href={site.resumeUrl}>
+            <DocButton which="resume" className="btn-w is-nav">
               <svg className="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z M14 3v4h4 M10 12h5 M10 16h5" /></svg>
               <span className="btn-text"><Roll>Résumé</Roll></span>
-            </a>
+            </DocButton>
+            <DocButton which="cv" className="nav-cv" label="Download CV">
+              <svg className="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>
+              <span className="btn-text"><Roll>CV</Roll></span>
+            </DocButton>
             <button className="nav-burger" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen((o) => !o)}>
               <span /><span />
             </button>

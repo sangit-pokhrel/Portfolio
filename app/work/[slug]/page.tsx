@@ -5,6 +5,7 @@ import { embedUrl, getProject, hostOf, projectMedia } from "@/lib/projects";
 import Nav from "@/components/Nav";
 import SmoothScroll from "@/components/SmoothScroll";
 import BackToTop from "@/components/BackToTop";
+import Docs from "@/components/Docs";
 import Contours from "@/components/Contours";
 import Browser from "@/components/Browser";
 import { Arrow, Media, Roll } from "@/components/ui";
@@ -134,6 +135,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </a>
       </main>
       <BackToTop />
+      <Docs />
     </>
   );
 }

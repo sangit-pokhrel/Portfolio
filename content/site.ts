@@ -29,7 +29,11 @@ export const site = {
   since: "building since 2019", // the "mclaren f1 since 2019" eyebrow
   location: "Kathmandu, Nepal",
   email: "hello@yourdomain.com",
-  resumeUrl: "#",
+  // Résumé / CV downloads: put the PDFs in the public/ folder with these names
+  documents: {
+    resume: { file: "/resume.pdf", label: "Résumé", note: "1 page · the highlights", download: "Sangit-Pokhrel-Resume.pdf" },
+    cv: { file: "/cv.pdf", label: "CV", note: "The full story · experience, projects, skills", download: "Sangit-Pokhrel-CV.pdf" },
+  },
 
   // Hero portrait (public/images/me/portrait.png)
   portrait: {

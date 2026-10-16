@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import Experience from "@/components/Experience";
 import Story from "@/components/Story";
 import BackToTop from "@/components/BackToTop";
+import Docs from "@/components/Docs";
 import Contours from "@/components/Contours";
 import Hero from "@/components/sections/Hero";
 import Signature from "@/components/sections/Signature";
@@ -44,6 +45,7 @@ export default function Home() {
       <Footer />
       <Story />
       <BackToTop />
+      <Docs />
       <Experience />
     </>
   );

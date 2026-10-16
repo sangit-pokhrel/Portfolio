@@ -6,6 +6,7 @@ import Contours from "../Contours";
 import Marquee from "../Marquee";
 import PortraitImage from "../PortraitImage";
 import { SocialLinks } from "./Socials";
+import DocButton from "../DocButton";
 
 const PAGES = [
   { href: "#top", label: "Home" },
@@ -46,7 +47,7 @@ export default function Footer() {
           {PAGES.map((p) => (
             <a key={p.href} href={p.href} className="footer-link"><Roll>{p.label}</Roll></a>
           ))}
-          <a className="footer-link is-accent" href={site.resumeUrl}><Roll>Résumé</Roll></a>
+          <DocButton which="resume" className="footer-link is-accent"><Roll>Résumé / CV</Roll></DocButton>
         </nav>
 
         <div className="footer-col is-right">

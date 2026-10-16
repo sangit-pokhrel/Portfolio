@@ -28,7 +28,8 @@ npm run build
 
 | You want to change… | Edit this |
 |---|---|
-| Name, logo words, role, email, résumé link, socials | `content/site.ts` (top of the file) |
+| Name, logo words, role, email, socials | `content/site.ts` (top of the file) |
+| Résumé / CV PDFs (download popup) | `public/resume.pdf` and `public/cv.pdf` |
 | Projects: titles, text, live/demo/code links | `content/site.ts` → `projects` |
 | A project's cover and screenshots | `public/images/projects/<slug>/` |
 | Hero photo, footer photo | `public/images/me/portrait.png` |
@@ -52,11 +53,18 @@ logo: { top: "Sangit", aka: "aka", bottom: "Music" },   // the top-left logo
 role: "Full-Stack Developer",
 location: "Kathmandu, Nepal",
 email: "hello@yourdomain.com",
-resumeUrl: "#",
 ```
 
-**Résumé button:** put your PDF in `public/` (for example `public/resume.pdf`) and set
-`resumeUrl: "/resume.pdf"`.
+**Résumé and CV downloads:** the "Résumé" and "CV" buttons (top right, and "Résumé / CV" in the
+footer) open a small popup where visitors pick one and it downloads. Save your PDFs as:
+
+- `public/resume.pdf`: your short résumé
+- `public/cv.pdf`: your full CV
+
+That's all: they're picked up automatically and download as `Sangit-Pokhrel-Resume.pdf` /
+`Sangit-Pokhrel-CV.pdf`. Until a file exists, its option shows "Coming soon". The PDFs must be in
+the `public/` folder (files in the project root itself aren't reachable by visitors). The card texts
+and download names are in `content/site.ts` → `documents`.
 
 **Social links:** further down, in `socials`. The names appear in the menu, the "Follow along"
 section and the footer. Add or remove entries freely:
