@@ -40,6 +40,11 @@ export function portraitSrc(): string | null {
   return listImages("me").find((u) => /portrait/i.test(u)) ?? listImages("me")[0] ?? null;
 }
 
+/** Photo for the signature card: public/images/me/card.* if present, else the portrait. */
+export function cardSrc(): string | null {
+  return listImages("me").find((u) => /\/card\./i.test(u)) ?? portraitSrc();
+}
+
 /** Does a file exist in /public? (e.g. the story recording) */
 export function publicFileExists(url: string): boolean {
   return fs.existsSync(path.join(process.cwd(), "public", decodeURIComponent(url.replace(/^\//, ""))));

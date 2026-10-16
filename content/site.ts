@@ -37,7 +37,7 @@ export const site = {
     mode: "2d" as "2d" | "3d",
     // A photo on a plain white/light background works best (it is cut out automatically).
     // Already transparent PNG? set removeBackground: false.
-    removeBackground: true,
+    removeBackground: false, // portrait.png is already cut out (transparent background)
     // 3D only: where the face is, as fractions of the image (0–1), used to shape the depth.
     face: { x: 0.52, y: 0.35, radius: 0.12 },
     // 3D only: how strongly the head turns towards the cursor.

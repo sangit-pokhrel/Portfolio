@@ -1,5 +1,5 @@
 import { site } from "@/content/site";
-import { portraitSrc } from "@/lib/images";
+import { cardSrc } from "@/lib/images";
 import { signatureStrokes } from "@/lib/signature";
 import Marquee from "../Marquee";
 
@@ -10,7 +10,7 @@ export default function Signature() {
   const half = Math.ceil(words.length / 2);
   const rowA = words.slice(0, half).join(" ");
   const rowB = words.slice(half).join(" ");
-  const photo = portraitSrc();
+  const photo = cardSrc();
 
   return (
     <section className="sig-track" data-sig aria-label={site.message.eyebrow}>
