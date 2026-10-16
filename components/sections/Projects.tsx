@@ -1,12 +1,12 @@
 import { site } from "@/content/site";
-import { listImages } from "@/lib/images";
+import { previewData, projectMedia } from "@/lib/projects";
+import ProjectPreview from "../ProjectPreview";
 import HL from "../HL";
 import { Arrow, Media, Roll } from "../ui";
 
 /* Projects as a crate of vinyl: sleeve = cover image, the record slides out
    and spins on hover, the label takes the project's colour. */
 export default function Projects() {
-  const covers = listImages("projects");
   return (
     <section className="s projects" id="work">
       <div className="c">
@@ -24,7 +24,7 @@ export default function Projects() {
           {site.projects.map((p, i) => {
             const no = String(i + 1).padStart(2, "0");
             return (
-              <a className="record" href={p.url} key={p.title} style={{ ["--label" as string]: p.color }}>
+              <a className="record" href={`/work/${p.slug}`} key={p.slug} data-preview={i} style={{ ["--label" as string]: p.color }}>
                 <div className="record-stage">
                   <div className="record-disc">
                     <div className="record-spin">
@@ -35,7 +35,7 @@ export default function Projects() {
                     </div>
                   </div>
                   <div className="record-sleeve">
-                    <Media src={p.image ?? covers[i]} seed={`p${i}${p.title}`} accent={p.color} alt={p.title} />
+                    <Media src={projectMedia(p.slug).cover} seed={`p${i}${p.title}`} accent={p.color} alt={p.title} />
                     <span className="record-side text-eyebrow">{i % 2 ? "B" : "A"}{Math.floor(i / 2) + 1}</span>
                   </div>
                 </div>
@@ -58,6 +58,7 @@ export default function Projects() {
           </a>
         </div>
       </div>
+      <ProjectPreview projects={site.projects.map(previewData)} />
     </section>
   );
 }

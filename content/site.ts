@@ -4,7 +4,20 @@
    (see README "Adding images"). They are picked up automatically.
    ========================================================================== */
 
-export type Project = { title: string; year: string; tags: string; url: string; color: string; image?: string };
+export type Project = {
+  slug: string;          // URL: /work/<slug>  ·  images: public/images/projects/<slug>/
+  title: string;
+  year: string;
+  tags: string;
+  color: string;         // record label colour
+  summary: string;       // one line, shown in the hover preview
+  role: string;
+  description: string;   // a paragraph for the project page
+  highlights: string[];
+  live?: string;         // live site URL (embedded as a preview + "Visit live" button)
+  demo?: string;         // demo video: YouTube/Vimeo URL, or leave empty and drop demo.mp4 in the project folder
+  repo?: string;         // source code URL
+};
 export type Social = { name: string; url: string };
 
 export const site = {
@@ -70,19 +83,92 @@ export const site = {
     right: { top: "OFF", bottom: "CODE", text: "Music, photography, side quests and what keeps me sane.", url: "#journey" },
   },
 
-  // Projects, shown as a crate of vinyl records. Cover images come from
-  // public/images/projects (1st file → 1st project…), or set `image` explicitly.
+  // Projects, shown as a crate of vinyl records. Each project has its own page at /work/<slug>.
+  // Images: public/images/projects/<slug>/ (first file = cover, the rest = screenshots).
+  // Demo video: put demo.mp4 in that folder, or set `demo` to a YouTube/Vimeo URL.
   projectsIntro:
     "Every project is a record: its own sleeve, its own sound. Hover one to pull it out of the crate.",
   projects: [
-    { title: "Project One", year: "2025", tags: "Next.js · Postgres", url: "#", color: "#b57bff" },
-    { title: "Project Two", year: "2025", tags: "React Native", url: "#", color: "#ff4fa3" },
-    { title: "Project Three", year: "2024", tags: "Three.js · GLSL", url: "#", color: "#b9adc9" },
-    { title: "Project Four", year: "2024", tags: "Python · ML", url: "#", color: "#b57bff" },
-    { title: "Project Five", year: "2023", tags: "Node · Redis", url: "#", color: "#efe9f6" },
-    { title: "Project Six", year: "2023", tags: "Go · gRPC", url: "#", color: "#ff4fa3" },
-    { title: "Project Seven", year: "2022", tags: "WordPress · PHP", url: "#", color: "#9d6bff" },
-    { title: "Project Eight", year: "2021", tags: "Vue · Firebase", url: "#", color: "#b57bff" },
+    {
+      slug: "project-one", title: "Project One", year: "2025", tags: "Next.js · Postgres", color: "#b57bff",
+      summary: "Full-stack product: auth, payments and a fast dashboard.",
+      role: "Design & development",
+      description: "Describe the problem, what you built and what changed because of it. Keep it to a few honest sentences: who it was for, the hard part, and the result.",
+      highlights: ["What you're proudest of", "A number that moved (users, speed, revenue)", "A tricky technical problem you solved"],
+      live: "https://example.com",
+      demo: "",
+      repo: "https://github.com/",
+    },
+    {
+      slug: "project-two", title: "Project Two", year: "2025", tags: "React Native", color: "#ff4fa3",
+      summary: "A mobile app that turns daily habits into a small game.",
+      role: "Design & development",
+      description: "Describe the problem, what you built and what changed because of it. Keep it to a few honest sentences: who it was for, the hard part, and the result.",
+      highlights: ["What you're proudest of", "A number that moved (users, speed, revenue)", "A tricky technical problem you solved"],
+      live: "https://example.com",
+      demo: "",
+      repo: "https://github.com/",
+    },
+    {
+      slug: "project-three", title: "Project Three", year: "2024", tags: "Three.js · GLSL", color: "#b9adc9",
+      summary: "Interactive 3D experience running smoothly in the browser.",
+      role: "Design & development",
+      description: "Describe the problem, what you built and what changed because of it. Keep it to a few honest sentences: who it was for, the hard part, and the result.",
+      highlights: ["What you're proudest of", "A number that moved (users, speed, revenue)", "A tricky technical problem you solved"],
+      live: "https://example.com",
+      demo: "",
+      repo: "https://github.com/",
+    },
+    {
+      slug: "project-four", title: "Project Four", year: "2024", tags: "Python · ML", color: "#b57bff",
+      summary: "A model that tags songs by mood, with a playful web UI.",
+      role: "Design & development",
+      description: "Describe the problem, what you built and what changed because of it. Keep it to a few honest sentences: who it was for, the hard part, and the result.",
+      highlights: ["What you're proudest of", "A number that moved (users, speed, revenue)", "A tricky technical problem you solved"],
+      live: "https://example.com",
+      demo: "",
+      repo: "https://github.com/",
+    },
+    {
+      slug: "project-five", title: "Project Five", year: "2023", tags: "Node · Redis", color: "#efe9f6",
+      summary: "Real-time backend handling thousands of live events.",
+      role: "Design & development",
+      description: "Describe the problem, what you built and what changed because of it. Keep it to a few honest sentences: who it was for, the hard part, and the result.",
+      highlights: ["What you're proudest of", "A number that moved (users, speed, revenue)", "A tricky technical problem you solved"],
+      live: "https://example.com",
+      demo: "",
+      repo: "https://github.com/",
+    },
+    {
+      slug: "project-six", title: "Project Six", year: "2023", tags: "Go · gRPC", color: "#ff4fa3",
+      summary: "Lightweight microservices with a clean developer experience.",
+      role: "Design & development",
+      description: "Describe the problem, what you built and what changed because of it. Keep it to a few honest sentences: who it was for, the hard part, and the result.",
+      highlights: ["What you're proudest of", "A number that moved (users, speed, revenue)", "A tricky technical problem you solved"],
+      live: "https://example.com",
+      demo: "",
+      repo: "https://github.com/",
+    },
+    {
+      slug: "project-seven", title: "Project Seven", year: "2022", tags: "WordPress · PHP", color: "#9d6bff",
+      summary: "Custom theme and plugins for a fast-growing publisher.",
+      role: "Design & development",
+      description: "Describe the problem, what you built and what changed because of it. Keep it to a few honest sentences: who it was for, the hard part, and the result.",
+      highlights: ["What you're proudest of", "A number that moved (users, speed, revenue)", "A tricky technical problem you solved"],
+      live: "https://example.com",
+      demo: "",
+      repo: "https://github.com/",
+    },
+    {
+      slug: "project-eight", title: "Project Eight", year: "2021", tags: "Vue · Firebase", color: "#b57bff",
+      summary: "My first shipped product: a shared playlist for parties.",
+      role: "Design & development",
+      description: "Describe the problem, what you built and what changed because of it. Keep it to a few honest sentences: who it was for, the hard part, and the result.",
+      highlights: ["What you're proudest of", "A number that moved (users, speed, revenue)", "A tricky technical problem you solved"],
+      live: "https://example.com",
+      demo: "",
+      repo: "https://github.com/",
+    },
   ] as Project[],
   projectsCta: "See every project, experiment and write-up",
 

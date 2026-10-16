@@ -101,6 +101,9 @@ export default function Experience() {
             document.body.classList.remove("is-loading");
             lenis.start();
             ScrollTrigger.refresh();
+            // arriving from another page with a section link (e.g. /#work)
+            const hash = window.location.hash;
+            if (hash.length > 1 && document.querySelector(hash)) setTimeout(() => scrollToTarget(hash), 200);
           });
       });
     });
@@ -192,8 +195,17 @@ export default function Experience() {
 
       // Purple → white: the whole background dissolves while the runway scrolls by
       // (every pixel changes together, so there are no gradient bands or seams)
-      gsap.timeline({ scrollTrigger: { trigger: ".dark-end", start: "top 95%", end: "bottom bottom", scrub: 0.6 } })
-        .fromTo(".dark-group", { backgroundColor: "rgba(30, 21, 49, 1)" }, { backgroundColor: "rgba(246, 243, 250, 0)", ease: "power1.inOut" }, 0)
+      // (routed through a soft violet so the midpoint never looks grey)
+      let morphP = 0;
+      let navHook = () => {}; // set once the nav-theme function exists below
+      gsap.timeline({ scrollTrigger: { trigger: ".dark-end", start: "top 95%", end: "bottom bottom", scrub: 0.6, onUpdate: (st) => { morphP = st.progress; navHook(); } } })
+        .fromTo(".dark-group", { backgroundColor: "rgba(30, 21, 49, 1)" }, {
+          keyframes: [
+            { backgroundColor: "rgba(92, 64, 150, 1)", ease: "power1.in" },
+            { backgroundColor: "rgba(201, 178, 240, 0.85)", ease: "none" },
+            { backgroundColor: "rgba(246, 243, 250, 0)", ease: "power1.out" },
+          ],
+        }, 0)
         .fromTo(".dark-group-bg", { opacity: 1 }, { opacity: 0, ease: "power1.in" }, 0);
 
       // Highlight reveals (gallery ones are handled above)
@@ -236,6 +248,20 @@ export default function Experience() {
           rotate: (i) => (i - mid) * 7,
           ease: "none",
         });
+      // 3D tilt of the hovered card, following the pointer
+      cards.forEach((card) => {
+        const inner = card.querySelector<HTMLElement>(".s-card-in");
+        if (!inner) return;
+        const onMove = (e: PointerEvent) => {
+          const r = card.getBoundingClientRect();
+          inner.style.setProperty("--tx", `${((e.clientX - r.left) / r.width - 0.5) * 16}deg`);
+          inner.style.setProperty("--ty", `${-((e.clientY - r.top) / r.height - 0.5) * 12}deg`);
+        };
+        const onLeave = () => { inner.style.setProperty("--tx", "0deg"); inner.style.setProperty("--ty", "0deg"); };
+        card.addEventListener("pointermove", onMove);
+        card.addEventListener("pointerleave", onLeave);
+        cleanups.push(() => { card.removeEventListener("pointermove", onMove); card.removeEventListener("pointerleave", onLeave); });
+      });
       gsap.fromTo("[data-oval]", { width: "1rem" }, { width: () => (window.innerWidth < 768 ? "5rem" : "9rem"), ease: "none", scrollTrigger: { trigger: ".socials", start: "top 80%", end: "top 30%", scrub: true } });
 
       // Footer reveal
@@ -251,20 +277,21 @@ export default function Experience() {
       const themed = $$("[data-theme-nav]");
       const nav = $("[data-nav]");
       // section positions are cached on refresh; scrolling only compares numbers
-      let zones: { top: number; bottom: number; theme: string }[] = [];
+      let zones: { top: number; bottom: number; theme: string; inDark: boolean }[] = [];
       const measureZones = () => {
         zones = themed.map((el) => {
           const r = el.getBoundingClientRect();
-          return { top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, theme: el.dataset.themeNav! };
+          return { top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, theme: el.dataset.themeNav!, inDark: !!el.closest(".dark-group") };
         });
       };
       const navTheme = () => {
         const y = window.scrollY + 40;
         let theme = "dark";
-        for (const z of zones) if (z.top <= y && z.bottom > y) theme = z.theme;
+        for (const z of zones) if (z.top <= y && z.bottom > y) theme = z.inDark && morphP > 0.45 ? "dark" : z.theme;
         nav.classList.toggle("is-light", theme === "light");
       };
       measureZones();
+      navHook = navTheme;
       const onZones = () => { measureZones(); navTheme(); };
       ScrollTrigger.addEventListener("refresh", onZones);
       cleanups.push(() => ScrollTrigger.removeEventListener("refresh", onZones));

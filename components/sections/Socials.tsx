@@ -26,9 +26,20 @@ export default function Socials() {
         <HL as="span">Along</HL>
       </h2>
       <div className="socials-cards" data-cards>
-        {cards.map((src, i) => (
-          <div className="s-card" key={i}><Media src={src} seed={`c${i}`} /></div>
-        ))}
+        {cards.map((src, i) => {
+          const s = site.socials[i % site.socials.length];
+          const mid = (cards.length - 1) / 2;
+          return (
+            <a className="s-card" key={i} href={s.url} target="_blank" rel="noopener noreferrer"
+              aria-label={`${s.name} (opens in a new tab)`}
+              style={{ ["--unrot" as string]: `${-(i - mid) * 7}deg` }}>
+              <div className="s-card-in">
+                <Media src={src} seed={`c${i}`} />
+                <span className="s-card-label"><span className="btn-text">{s.name}</span><span aria-hidden="true">↗</span></span>
+              </div>
+            </a>
+          );
+        })}
       </div>
       <div className="socials-foot">
         <HL className="text-cta font-brier">Find me online</HL>

@@ -17,7 +17,7 @@ Files are sorted by name, so prefix them with numbers to control order.
 |---|---|---|
 | `public/images/me/` | Hero 3D portrait | One file named `portrait.png` (or `.jpg`). See below. |
 | `public/images/gallery/` | Horizontal scrolling gallery | The **file name becomes the caption**: `03-live-gig-2025.jpg` → "Live gig, 2025". Add as many as you like. |
-| `public/images/projects/` | Vinyl record sleeves | 1st file → 1st project in `content/site.ts`, 2nd → 2nd… Square images look best. |
+| `public/images/projects/<slug>/` | Record sleeve, hover preview and the project page | First file = cover, the rest = screenshots. Drop `demo.mp4` here for the demo player. |
 | `public/images/featured/` | Floating photos around "Let's build something" | First 4 are used. |
 | `public/images/cards/` | Fanned cards in "Follow along" | Up to 9. Tall (9:16) images look best — phone screenshots work great. |
 
@@ -45,6 +45,13 @@ Record your story (a phone voice memo is fine), export it as **MP3**, and save i
 `public/audio/story.mp3`. The bottom-right avatar picks it up automatically: click → the tape
 peels off and the mouth moves with your voice. Until the file exists, the bubble says the
 recording is coming soon. Texts are in `content/site.ts` → `story`.
+
+## Projects
+
+Each project in `content/site.ts` → `projects` gets its own page at `/work/<slug>` with a live
+preview (your `live` URL embedded in a browser frame), a demo (YouTube/Vimeo link in `demo`, or a
+`demo.mp4` in its image folder), description, highlights and screenshots. Hovering a record on the
+home page shows a small preview that follows the cursor.
 
 ## Editing text
 

@@ -48,6 +48,12 @@ export default function Nav() {
   const go = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
     setOpen(false);
+    // on a project page the sections live on the home page
+    const onHome = window.location.pathname === "/";
+    if (!onHome && (href === "#top" ? e.currentTarget.classList.contains("nav-brand") : !document.querySelector(href))) {
+      window.location.href = href === "#top" ? "/" : `/${href}`;
+      return;
+    }
     scrollToTarget(href);
   };
 
