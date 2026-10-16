@@ -28,7 +28,11 @@ export default function StoryWidget({ src, available, text }: Props) {
     const wait = setInterval(() => {
       if (!document.body.classList.contains("is-loading")) {
         clearInterval(wait);
-        t = setTimeout(() => setBubble(true), 2500);
+        t = setTimeout(() => {
+          setBubble(true);
+          // tuck the invitation away after a few seconds so it doesn't cover the page
+          t = setTimeout(() => setBubble((b) => (document.querySelector(".story.is-taped") ? false : b)), 6500);
+        }, 2500);
       }
     }, 300);
     return () => { clearInterval(wait); clearTimeout(t); };

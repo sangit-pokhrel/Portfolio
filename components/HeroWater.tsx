@@ -11,6 +11,9 @@ import { fullscreenVertex, simFragment, waterFragment } from "@/lib/water";
  * this canvas re-draws the name in WebGL, reading the h1's positions and GSAP values,
  * so the letters can be refracted by a real ripple simulation that follows the cursor.
  */
+// true = re-draw the name in WebGL so the ripples bend the letters; false = ripples over the real text
+const DRAW_TEXT = false;
+
 export default function HeroWater() {
   const mountRef = useRef<HTMLDivElement>(null);
 
@@ -68,6 +71,7 @@ export default function HeroWater() {
     scene.add(new THREE.Mesh(quad, mat));
 
     const heights = [0, 0];
+    let ready = false;
     let h1Height = 1;
 
     // Measure the DOM name and draw it into the texture at its resting position
@@ -104,6 +108,7 @@ export default function HeroWater() {
         rect.y -= scrollPx * dpr;
         (i === 0 ? uniforms.uLine1 : uniforms.uLine2).value.copy(rect);
 
+        if (!DRAW_TEXT) return; // keep the real DOM lettering; only the glassy ripples are drawn
         tg.save();
         tg.font = `800 ${size * dpr}px ${family}`;
         (tg as CanvasRenderingContext2D & { fontStretch: string }).fontStretch = "semi-condensed";
@@ -123,7 +128,8 @@ export default function HeroWater() {
         tg.restore();
       });
       textTex.needsUpdate = true;
-      hero.classList.add("is-water");
+      ready = true;
+      if (DRAW_TEXT) hero.classList.add("is-water");
     };
 
     // Pointer → drops into the simulation (stronger when moving faster)
@@ -148,7 +154,7 @@ export default function HeroWater() {
     const clock = new THREE.Timer();
     const tick = () => {
       raf = requestAnimationFrame(tick);
-      if (!visible || !hero.classList.contains("is-water")) return;
+      if (!visible || !ready) return;
       clock.update();
       uniforms.uTime.value = clock.getElapsed();
 

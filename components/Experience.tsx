@@ -130,7 +130,7 @@ export default function Experience() {
         onUpdate: (st) => heroGL.setProgress?.(st.progress),
       });
       if (document.querySelector(".hero-portrait-move")) gsap.to(".hero-portrait-move", { yPercent: -14, scale: 0.62, ease: "none", scrollTrigger: { trigger: ".hero-track", start: "top top", end: "bottom top", scrub: true } });
-      gsap.to(".hero-name", { yPercent: 25, opacity: 0.2, ease: "none", scrollTrigger: { trigger: ".hero-track", start: "top top", end: "bottom top", scrub: true } });
+      gsap.to(".hero-name", { yPercent: 12, opacity: 0.2, ease: "none", scrollTrigger: { trigger: ".hero-track", start: "top top", end: "bottom top", scrub: true } });
 
       // Signature section: photo shrinks into a card, then the signature writes itself
       const strokes = $$<SVGPathElement>("[data-sig-path]");
