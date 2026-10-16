@@ -1175,6 +1175,7 @@ button.footer-link { background: none; border: 0; padding: 0; cursor: pointer; t
 .docs-title { margin: 0; font-weight: 400; font-variation-settings: "wght" 850, "wdth" 88; font-size: 2.6rem; line-height: .95; text-transform: uppercase; letter-spacing: -.03em; }
 .docs-sub { margin: .7rem auto 1.5rem; max-width: 22rem; font-size: 1rem; line-height: 1.35; color: var(--ink-3); }
 .docs-options { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; }
+.docs-options.is-single { grid-template-columns: 1fr; max-width: 16rem; margin: 0 auto; }
 .docs-card {
   position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: .35rem; text-align: left;
   padding: 1.1rem 1.1rem 1rem; border-radius: 1.2rem; background: rgba(181, 123, 255, .1);
@@ -1190,8 +1191,6 @@ button.footer-link { background: none; border: 0; padding: 0; cursor: pointer; t
 .docs-card-cta { margin-top: .5rem; font-variation-settings: "wght" 800, "wdth" 86; font-size: .8rem; text-transform: uppercase; color: var(--accent-deep); }
 .docs-card.is-picked { background: var(--accent); border-color: var(--accent); }
 .docs-card.is-picked .docs-card-cta, .docs-card.is-picked .docs-card-note { color: var(--ink); }
-.docs-card.is-missing { opacity: .55; cursor: not-allowed; }
-.docs-card.is-missing .docs-card-icon { background: rgba(30, 21, 49, .25); color: var(--white); }
 body.docs-open .story, body.docs-open .to-top { opacity: 0; pointer-events: none; }
 @media (max-width: 767px) {
   .nav-cv { height: 2.9rem; padding: 0 .75rem; }

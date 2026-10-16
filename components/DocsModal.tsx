@@ -83,35 +83,24 @@ export default function DocsModal({ docs }: { docs: Doc[] }) {
           {done ? "Thanks for your interest. Talk soon!" : "Pick the one you need: the quick read or the full story."}
         </p>
 
-        <div className="docs-options">
-          {docs.map((d) =>
-            d.available ? (
-              <a
-                key={d.kind}
-                className={`docs-card${focus === d.kind ? " is-focus" : ""}${done === d.kind ? " is-picked" : ""}`}
-                href={d.file}
-                download={d.download}
-                onClick={() => setDone(d.kind)}
-                onMouseEnter={() => setFocus(d.kind)}
-              >
-                <span className="docs-card-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>
-                </span>
-                <span className="docs-card-label">{d.label}</span>
-                <span className="docs-card-note">{d.note}</span>
-                <span className="docs-card-cta">{done === d.kind ? "Downloading ✓" : "Download PDF"}</span>
-              </a>
-            ) : (
-              <div key={d.kind} className="docs-card is-missing" aria-disabled="true">
-                <span className="docs-card-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M12 7v6M12 17h.01M4 12a8 8 0 1 0 16 0 8 8 0 1 0-16 0" /></svg>
-                </span>
-                <span className="docs-card-label">{d.label}</span>
-                <span className="docs-card-note">{d.note}</span>
-                <span className="docs-card-cta">Coming soon</span>
-              </div>
-            )
-          )}
+        <div className={`docs-options${docs.filter((d) => d.available).length === 1 ? " is-single" : ""}`}>
+          {docs.filter((d) => d.available).map((d) => (
+            <a
+              key={d.kind}
+              className={`docs-card${focus === d.kind ? " is-focus" : ""}${done === d.kind ? " is-picked" : ""}`}
+              href={d.file}
+              download={d.download}
+              onClick={() => setDone(d.kind)}
+              onMouseEnter={() => setFocus(d.kind)}
+            >
+              <span className="docs-card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>
+              </span>
+              <span className="docs-card-label">{d.label}</span>
+              <span className="docs-card-note">{d.note}</span>
+              <span className="docs-card-cta">{done === d.kind ? "Downloading ✓" : "Download PDF"}</span>
+            </a>
+          ))}
         </div>
       </div>
     </div>

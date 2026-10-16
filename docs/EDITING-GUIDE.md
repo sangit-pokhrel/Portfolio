@@ -62,7 +62,8 @@ footer) open a small popup where visitors pick one and it downloads. Save your P
 - `public/cv.pdf`: your full CV
 
 That's all: they're picked up automatically and download as `Sangit-Pokhrel-Resume.pdf` /
-`Sangit-Pokhrel-CV.pdf`. Until a file exists, its option shows "Coming soon". The PDFs must be in
+`Sangit-Pokhrel-CV.pdf`. **The ones there now are samples** (made from your site details, with
+`[placeholders]`); save your real PDFs over them. If a file is missing, its option is hidden. The PDFs must be in
 the `public/` folder (files in the project root itself aren't reachable by visitors). The card texts
 and download names are in `content/site.ts` → `documents`.
 
@@ -181,8 +182,8 @@ Each card links to one of your `socials`, in order.
 
 ## Your voice story ("Unmute me")
 
-Record your story (a phone voice memo is fine), export as **MP3**, and save it as
-`public/audio/story.mp3`. The bottom-right avatar picks it up automatically. The bubble texts are in
+Record your story (a phone voice memo is fine), export as **MP3**, and save it over
+`public/audio/story.mp3` (the current one is a **sample** narrated by a computer voice). The bottom-right avatar picks it up automatically. The bubble texts are in
 `content/site.ts` → `story`.
 
 ---
