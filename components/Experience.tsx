@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { heroGL, scrollToTarget, setLenis } from "@/lib/smooth";
 import { playHL } from "@/lib/highlight";
+import { LOADER_DONE, LOADER_TERM } from "./Loader";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,14 +68,32 @@ export default function Experience() {
       window.dispatchEvent(new Event("hero:layout"));
     }
 
-    /* ---- Loader + intro ---- */
-    const count = { v: 0 };
-    const countEl = $("[data-loader-count]");
-    const showCount = () => (countEl.textContent = String(Math.round(count.v)));
+    /* ---- Loader ("compiling a track") + intro ---- */
+    const prog = { v: 0 };
+    const bars = $$(".lw-bar");
+    const head = $("[data-loader-head]");
+    const timeEl = $("[data-loader-time]");
+    const termEl = $("[data-loader-term]");
+    let lit = 0;
+    const render = () => {
+      const p = prog.v / 100;
+      head.style.left = `${p * 100}%`;
+      // light the bars the playhead has passed (only touch the ones that changed)
+      const n = Math.round(p * bars.length);
+      for (let i = lit; i < n; i++) bars[i].classList.add("is-lit");
+      lit = Math.max(lit, n);
+      const secs = Math.round(p * 60);
+      timeEl.textContent = `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`;
+      if (termEl.dataset.done !== "1") termEl.textContent = LOADER_TERM.slice(0, Math.round(LOADER_TERM.length * Math.min(1, p * 1.8)));
+    };
     ctx.add(() => {
       gsap.set(".hero-name-line > span", { yPercent: 105 });
       if (document.querySelector(".hero-portrait")) gsap.set(".hero-portrait", { yPercent: 12, opacity: 0 });
-      gsap.to(count, { v: 90, duration: 1.6, ease: "power2.out", onUpdate: showCount });
+      gsap.fromTo(".loader-inner > :not(.loader-play)", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, stagger: 0.08, ease: "expo.out" });
+    });
+    // the track always "plays" for ~2s (so the splash is seen), then waits at 92% until the page is ready
+    const minIntro = new Promise<void>((done) => {
+      ctx.add(() => gsap.to(prog, { v: 92, duration: 2, ease: "power1.inOut", onUpdate: render, onComplete: () => done() }));
     });
 
     const ready = Promise.all([
@@ -82,15 +101,23 @@ export default function Experience() {
       new Promise<void>((r) => (document.readyState === "complete" ? r() : window.addEventListener("load", () => r(), { once: true }))),
     ]);
 
-    ready.then(() => {
+    Promise.all([ready, minIntro]).then(() => {
       if (cancelled) return;
       ctx.add(() => {
         fitAll();
         buildScroll();
         gsap.timeline()
-          .to(count, { v: 100, duration: 0.5, ease: "power2.out", onUpdate: showCount }, "+=0.3")
-          .to(".loader-inner", { yPercent: -40, opacity: 0, duration: 0.8, ease: "expo.in" })
-          .to("[data-loader]", { clipPath: "ellipse(150% 0% at 50% 0%)", duration: 1.2, ease: "expo.inOut" }, "-=0.35")
+          .to(prog, { v: 100, duration: 0.45, ease: "power2.out", onUpdate: render })
+          .add(() => { termEl.dataset.done = "1"; termEl.textContent = LOADER_DONE; })
+          // the waveform collapses into a single line…
+          .to("[data-loader-bars]", { scaleY: 0.035, duration: 0.5, ease: "power3.in" }, "+=0.2")
+          .to("[data-loader-head]", { opacity: 0, duration: 0.3 }, "<")
+          // …a play button pops…
+          .fromTo("[data-loader-play]", { scale: 0, rotate: -120, opacity: 0 }, { scale: 1, rotate: 0, opacity: 1, duration: 0.55, ease: "back.out(2.2)" }, "-=0.1")
+          .to("[data-loader-play]", { scale: 1.35, opacity: 0, duration: 0.35, ease: "power2.in" }, "+=0.12")
+          .to(".loader-inner", { opacity: 0, duration: 0.35 }, "<")
+          // …and the curtain lifts
+          .to("[data-loader]", { clipPath: "ellipse(150% 0% at 50% 0%)", duration: 1.1, ease: "expo.inOut" }, "-=0.15")
           .add(() => { heroGL.introRequested = true; heroGL.intro?.(); }, "-=0.6")
           .to(".hero-name-line > span", { yPercent: 0, duration: 1.4, stagger: 0.12, ease: "expo.out" }, "-=0.6")
           .add(() => {
