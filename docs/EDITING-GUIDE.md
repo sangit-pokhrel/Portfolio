@@ -36,7 +36,7 @@ npm run build
 | Photo behind the signature | `public/images/me/card.jpg` |
 | Scrolling gallery photos + captions | `public/images/gallery/` |
 | "Let's build something" floating photos | `public/images/featured/` |
-| "Follow along" cards | `public/images/cards/` |
+| "Follow along" cards | built from your `socials` links; Instagram tiles from `public/images/socials/instagram/` |
 | "Unmute me" voice story | `public/audio/story.mp3` |
 | Colours | `app/globals.css` (top of the file) |
 
@@ -173,7 +173,12 @@ Number the files to set the order. The quotes between photos live in `content/si
 
 **"Let's build something":** `public/images/featured/` (first 4 files).
 
-**"Follow along" cards:** `public/images/cards/` (up to 9; tall 9:16 images, e.g. phone screenshots).
+**"Follow along" cards:** seven mini profile screens built automatically from your details:
+Now playing (plays your story), Instagram, LinkedIn, GitHub, Facebook, Résumé (opens the download
+popup) and Say hello (email). Handles come from the `socials` links in `content/site.ts`. The
+**GitHub card shows live data** (repos, followers, top languages, latest repos) fetched from your
+public GitHub profile and refreshed daily. For the **Instagram grid**, drop up to 6 square photos into
+`public/images/socials/instagram/` (otherwise your photos from `public/images/me/` are used).
 Each card links to one of your `socials`, in order.
 
 **Photos from Facebook/Instagram:** open the photo → ⋯ → Download, rename it, drop it in the folder.

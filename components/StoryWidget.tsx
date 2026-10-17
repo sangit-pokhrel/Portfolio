@@ -83,6 +83,15 @@ export default function StoryWidget({ src, avatar, available, text }: Props) {
     try { await a.play(); } catch { setPhase("missing"); setBubble(true); }
   };
 
+  // other parts of the page (e.g. the "Now playing" card) can start/pause the story
+  const toggleRef = useRef(toggle);
+  toggleRef.current = toggle;
+  useEffect(() => {
+    const onPlay = () => toggleRef.current();
+    window.addEventListener("story:play", onPlay);
+    return () => window.removeEventListener("story:play", onPlay);
+  }, []);
+
   const label =
     phase === "playing" ? text.playing :
     phase === "missing" ? text.missing :

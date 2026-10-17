@@ -21,7 +21,7 @@ Files are sorted by name, so prefix them with numbers to control order.
 | `public/images/gallery/` | Horizontal scrolling gallery | The **file name becomes the caption**: `03-live-gig-2025.jpg` → "Live gig, 2025". Add as many as you like. |
 | `public/images/projects/<slug>/` | Record sleeve, hover preview and the project page | First file = cover, the rest = screenshots. Drop `demo.mp4` here for the demo player. |
 | `public/images/featured/` | Floating photos around "Let's build something" | First 4 are used. |
-| `public/images/cards/` | Fanned cards in "Follow along" | Up to 9. Tall (9:16) images look best — phone screenshots work great. |
+| `public/images/socials/instagram/` | Instagram card grid in "Follow along" | Up to 6 square photos. |
 
 Folder empty? A generated placeholder is shown instead, so nothing breaks.
 
