@@ -208,10 +208,10 @@ export const site = {
   },
 
   socials: [
-    { name: "GitHub", url: "https://github.com/" },
-    { name: "LinkedIn", url: "https://linkedin.com/" },
-    { name: "Instagram", url: "https://instagram.com/" },
-    { name: "Facebook", url: "https://facebook.com/" },
+    { name: "GitHub", url: "https://github.com/sangit-pokhrel" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/pokhrelsangit/" },
+    { name: "Instagram", url: "https://www.instagram.com/aw.sike/" },
+    { name: "Facebook", url: "https://www.facebook.com/sangit.artova/" },
   ] as Social[],
 };
 
