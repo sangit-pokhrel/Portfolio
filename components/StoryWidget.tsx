@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 type Phase = "taped" | "playing" | "paused" | "ended" | "missing";
 type Props = {
   src: string;
+  avatar: string;
   available: boolean;
   text: { prompt: string; cta: string; playing: string; missing: string; ended: string };
 };
@@ -14,12 +15,13 @@ type Props = {
  * Click → the tape peels off, the CD spins and the recording plays; the mouth moves with
  * the loudness of the voice (Web Audio analyser). Click again to pause.
  */
-export default function StoryWidget({ src, available, text }: Props) {
+export default function StoryWidget({ src, avatar, available, text }: Props) {
   const [phase, setPhase] = useState<Phase>("taped");
   const [bubble, setBubble] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const mouthRef = useRef<SVGEllipseElement>(null);
+  const mouthRef = useRef<SVGGElement>(null);
   const ringRef = useRef<SVGCircleElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
   const graph = useRef<{ ctx: AudioContext; analyser: AnalyserNode; data: Uint8Array<ArrayBuffer> } | null>(null);
 
   // Show the invitation once the intro has finished
@@ -41,7 +43,7 @@ export default function StoryWidget({ src, available, text }: Props) {
   // Mouth follows the voice; ring shows progress
   useEffect(() => {
     if (phase !== "playing") {
-      if (mouthRef.current) mouthRef.current.style.transform = "scaleY(.25)";
+      if (mouthRef.current) mouthRef.current.style.transform = "";
       return;
     }
     let raf = 0;
@@ -56,7 +58,8 @@ export default function StoryWidget({ src, available, text }: Props) {
         const rms = Math.sqrt(sum / g.data.length);
         level += (Math.min(1, rms * 6) - level) * 0.35;
       }
-      if (mouthRef.current) mouthRef.current.style.transform = `scaleY(${0.25 + level * 1.6})`;
+      if (mouthRef.current) mouthRef.current.style.transform = `translateY(${-level * 3}px) scale(${1 + level * 0.07})`;
+      if (btnRef.current) btnRef.current.style.setProperty("--talk", String(level));
       if (ringRef.current && a && a.duration) ringRef.current.style.strokeDashoffset = String(1 - a.currentTime / a.duration);
     };
     loop();
@@ -94,6 +97,7 @@ export default function StoryWidget({ src, available, text }: Props) {
       </div>
 
       <button
+        ref={btnRef}
         className="story-btn"
         onClick={toggle}
         aria-pressed={phase === "playing"}
@@ -109,30 +113,14 @@ export default function StoryWidget({ src, available, text }: Props) {
           </defs>
           <g clipPath="url(#story-clip)">
             <circle cx="60" cy="60" r="56" className="av-bg" />
-            {/* shoulders + checked shirt */}
-            <path d="M14 122 C18 100 36 92 60 92 C84 92 102 100 106 122 Z" className="av-shirt" />
-            <path d="M48 92 L60 112 L72 92" className="av-collar" />
-            {/* head */}
-            <ellipse cx="60" cy="58" rx="25" ry="29" className="av-skin" />
-            <rect x="52" y="80" width="16" height="14" className="av-skin" />
-            {/* beard */}
-            <path d="M36 62 C38 84 50 91 60 91 C70 91 82 84 84 62 C80 76 71 81 60 81 C49 81 40 76 36 62 Z" className="av-hair" />
-            {/* hair */}
-            <path d="M33 54 C29 30 47 18 63 19 C80 20 93 31 88 55 C85 42 76 35 63 36 C51 37 41 42 33 54 Z" className="av-hair" />
-            {/* glasses */}
-            <rect x="39" y="49" width="17" height="12" rx="4" className="av-glasses" />
-            <rect x="64" y="49" width="17" height="12" rx="4" className="av-glasses" />
-            <path d="M56 54 L64 54" className="av-glasses" />
-            <g className="av-eyes">
-              <circle cx="47.5" cy="55" r="2" />
-              <circle cx="72.5" cy="55" r="2" />
+            {/* your photo: bounces with the loudness of the voice while playing */}
+            <g className="av-photo" ref={mouthRef}>
+              <image href={avatar} x="0" y="0" width="120" height="120" preserveAspectRatio="xMidYMid slice" />
             </g>
-            {/* mouth: moves with the voice */}
-            <ellipse cx="60" cy="74" rx="7" ry="4.5" className="av-mouth" ref={mouthRef} />
-            {/* tape: peels off when unmuted */}
+            {/* tape over the mouth: peels off when unmuted */}
             <g className="av-tape">
-              <rect x="44" y="69" width="32" height="9" rx="1" transform="rotate(-12 60 73.5)" />
-              <rect x="44" y="69" width="32" height="9" rx="1" transform="rotate(12 60 73.5)" />
+              <rect x="27" y="70" width="30" height="8" rx="1" transform="rotate(-14 42 74)" />
+              <rect x="27" y="70" width="30" height="8" rx="1" transform="rotate(10 42 74)" />
             </g>
           </g>
         </svg>

@@ -903,20 +903,14 @@ body.is-loading .story, body.menu-open .story { opacity: 0; transform: translate
 .story-ring circle { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; transition: opacity .4s; }
 .story.is-playing .story-ring circle, .story.is-paused .story-ring circle { opacity: 1; }
 
-/* avatar parts */
+/* avatar: your photo */
 .av-bg { fill: var(--accent); }
-.av-shirt { fill: #8b7f6c; }
-.av-collar { fill: var(--ink); }
-.av-skin { fill: #d9a27c; }
-.av-hair { fill: #1c1424; }
-.av-glasses { fill: rgba(255, 255, 255, .25); stroke: #f6f3fa; stroke-width: 2.2; }
-.av-eyes { fill: #1c1424; transform-origin: 60px 55px; animation: blink 4.5s infinite; }
-@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
-.av-mouth { fill: #3a1426; transform-box: fill-box; transform-origin: center; transform: scaleY(.25); }
-
+.av-photo { transform-box: fill-box; transform-origin: 50% 70%; transition: transform .08s linear; }
+.story-btn { --talk: 0; }
+.story.is-playing .story-avatar { box-shadow: 0 .6rem 1.6rem rgba(30, 21, 49, .3), 0 0 0 calc(var(--talk) * 9px) rgba(181, 123, 255, .45); }
 /* tape: two crossed strips that peel away */
 .av-tape rect {
-  fill: #f3eedf; stroke: rgba(30, 21, 49, .18); stroke-width: .8;
+  fill: #f3eedf; filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); stroke: rgba(30, 21, 49, .18); stroke-width: .8;
   transform-box: fill-box; transform-origin: center;
   transition: transform .9s var(--ease), opacity .6s var(--ease);
 }
@@ -934,9 +928,11 @@ body.is-loading .story, body.menu-open .story { opacity: 0; transform: translate
    Back to top (bottom-left, after the hero)
    ========================================================================== */
 .to-top {
-  position: fixed; left: var(--gap); bottom: var(--gap); z-index: 104;
+  /* bottom-right, stacked above the "Unmute me" avatar */
+  position: fixed; right: calc(var(--gap) + .6rem); bottom: calc(var(--gap) + 4.8rem + 1rem); z-index: 104;
   width: 3.6rem; height: 3.6rem; border-radius: 50%;
   display: grid; place-items: center; background: var(--ink); color: var(--accent);
+  border: 1.5px solid rgba(181, 123, 255, .55);
   box-shadow: 0 .6rem 1.6rem rgba(30, 21, 49, .28);
   opacity: 0; transform: translateY(1.2rem) scale(.8); pointer-events: none;
   transition: opacity .5s var(--ease), transform .7s var(--ease), background-color .4s var(--ease), color .4s var(--ease);
@@ -948,14 +944,15 @@ body.is-loading .story, body.menu-open .story { opacity: 0; transform: translate
 .to-top-ring { position: absolute; inset: -4px; width: calc(100% + 8px); height: calc(100% + 8px); transform: rotate(-90deg); pointer-events: none; }
 .to-top-ring circle { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
 .to-top-label {
-  position: absolute; left: calc(100% + .6rem); white-space: nowrap;
+  position: absolute; right: calc(100% + .6rem); white-space: nowrap;
   font-variation-settings: "wght" 800, "wdth" 86; font-size: .8rem; text-transform: uppercase; color: var(--ink);
   background: var(--white); padding: .3rem .5rem; border-radius: .3rem;
-  opacity: 0; transform: translateX(-.4rem); transition: opacity .4s var(--ease), transform .5s var(--ease);
+  opacity: 0; transform: translateX(.4rem); transition: opacity .4s var(--ease), transform .5s var(--ease);
 }
 .to-top:hover .to-top-label { opacity: 1; transform: none; }
 body.menu-open .to-top { opacity: 0; pointer-events: none; }
 @media (max-width: 767px) { .to-top { width: 3rem; height: 3rem; } }
+@media (max-width: 767px) { .to-top { right: calc(.75rem + .25rem); bottom: calc(.75rem + 3.5rem + .8rem); } }
 
 /* ==========================================================================
    Project hover preview (follows the cursor)
@@ -1147,7 +1144,6 @@ body.menu-open .to-top { opacity: 0; pointer-events: none; }
   .story { right: .75rem; bottom: .75rem; }
   .story-btn { width: 3.5rem; height: 3.5rem; }
   .story-bubble { margin-bottom: .9rem; }
-  .to-top { left: .75rem; bottom: .75rem; }
 }
 /* very small phones */
 @media (max-width: 374px) {
