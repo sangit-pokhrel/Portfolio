@@ -332,9 +332,9 @@ body.menu-open .nav-burger span:nth-child(2) { transform: rotate(-45deg); }
 .hero {
   position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
   background: transparent;
-  --name-fill: #ebe5f3;      /* the big name behind you: darken to make it louder */
+  --name-fill: #cbbbe6;      /* SANGIT behind you: darken to make it louder */
   --name-stroke: #d3c8e2;
-  --name-serif: #d6c7ef;     /* POKHREL */
+  --name-serif: #b9a3e4;     /* POKHREL */
 }
 /* page-wide animated contours, fixed behind every light section */
 .page-contours {
@@ -367,7 +367,7 @@ body.menu-open .nav-burger span:nth-child(2) { transform: rotate(-45deg); }
 .hero-name-line { display: block; overflow: hidden; padding: 0 .04em; }
 .hero-name-line > span { display: block; }
 .hero-name-line:first-child > span {
-  background: linear-gradient(105deg, var(--name-fill) 0 42%, #ffffff 50%, var(--name-fill) 58% 100%);
+  background: linear-gradient(105deg, var(--name-fill) 0 42%, #efe8fb 50%, var(--name-fill) 58% 100%);
   background-size: 260% 100%; background-position: 100% 0;
   -webkit-background-clip: text; background-clip: text; color: transparent;
   animation: nameShine 7s var(--ease-io) infinite;
