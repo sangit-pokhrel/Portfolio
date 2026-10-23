@@ -86,9 +86,11 @@ export default function ProjectPreview({ projects }: { projects: PreviewData[] }
               <span className="pp-year">{p.year}</span>
             </div>
             <p className="pp-sum">{p.summary}</p>
+            <p className="pp-credit">{p.credit}</p>
             <div className="pp-tags">
               <span>{p.tags}</span>
-              {p.hasLive && <b>Live</b>}
+              <b>{p.status}</b>
+              {p.hasCode && <b>Code</b>}
               {p.hasDemo && <b>Demo</b>}
             </div>
           </div>

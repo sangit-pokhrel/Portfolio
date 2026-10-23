@@ -596,7 +596,7 @@ body.menu-open .nav-burger span:nth-child(2) { transform: rotate(-45deg); }
 .record-title { font-variation-settings: "wght" 750, "wdth" 93; font-size: 1.35rem; line-height: 1; text-transform: uppercase; }
 .record-no { grid-row: 1; grid-column: 1; }
 .record-title { grid-row: 1; grid-column: 2; }
-.record-year { grid-row: 1; grid-column: 3; opacity: .6; }
+.record-year { grid-row: 1; grid-column: 3; opacity: .6; white-space: nowrap; }
 .record-tags { grid-row: 2; grid-column: 2 / 4; opacity: .55; }
 .cta-row { display: flex; justify-content: space-between; align-items: center; gap: 2rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(30, 21, 49, .15); }
 .cta-row .text-cta { max-width: 26rem; }
@@ -1422,4 +1422,49 @@ button.s-card { padding: 0; border: 0; background: none; font: inherit; color: i
   .bubble-note { display: none; }
   .bubble.is-skill .bubble-in { padding: .35rem .65rem; }
   .bubble.is-skill .bubble-label { font-size: .66rem; }
+}
+
+/* ==========================================================================
+   Project status, credits, role checklist, link lists
+   ========================================================================== */
+.record-status { grid-row: 3; grid-column: 2 / 4; display: inline-flex; align-items: center; gap: .4rem; opacity: .85; }
+.record-status::before, .pd-status::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: currentColor; flex: none; }
+.is-live { color: #2e9b6a; }
+.is-in-progress { color: #c98a00; }
+.is-offline { color: #8a7f9b; }
+.is-open-source { color: var(--accent-deep); }
+.record-status.is-live::before, .pd-status.is-live::before { box-shadow: 0 0 0 0 rgba(46, 155, 106, .5); animation: livePulse 2s infinite; }
+@keyframes livePulse { 0% { box-shadow: 0 0 0 0 rgba(46, 155, 106, .5); } 70% { box-shadow: 0 0 0 .45rem rgba(46, 155, 106, 0); } 100% { box-shadow: 0 0 0 0 rgba(46, 155, 106, 0); } }
+
+.pp-credit { margin: 0; font-size: .7rem; text-transform: uppercase; letter-spacing: .04em; color: var(--label); }
+
+.pd-status { display: inline-flex; align-items: center; gap: .4rem; margin-left: .6rem; padding: .3rem .6rem; border-radius: 1rem; background: rgba(30, 21, 49, .06); }
+.pd-credit { margin: -.4rem 0 0; font-variation-settings: "wght" 750, "wdth" 92; text-transform: uppercase; font-size: .85rem; letter-spacing: .04em; color: var(--accent-deep); }
+.pd-private { font-size: .9rem; color: var(--ink-3); padding: .55rem .9rem; border: 1px dashed rgba(30, 21, 49, .25); border-radius: 2rem; }
+
+.pd-role, .pd-links { max-width: 76rem; margin: 0 auto 7rem; }
+.pd-checklist { margin: 2rem 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2.5rem; }
+.pd-checklist li {
+  position: relative; padding: 1.1rem 1.2rem 1.1rem 3.4rem; border-radius: 1rem; font-size: 1.05rem; line-height: 1.35;
+  background: rgba(255, 255, 255, .6); border: 1px solid rgba(30, 21, 49, .08);
+}
+.pd-checklist li::before {
+  content: "✓"; position: absolute; left: 1.1rem; top: 1rem; width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  display: grid; place-items: center; font-size: .8rem; font-weight: 700; background: var(--label); color: var(--ink);
+}
+.pd-link-list { margin-top: 2rem; border-top: 1px solid rgba(30, 21, 49, .15); }
+.pd-link-row { display: grid; grid-template-columns: minmax(14rem, 1fr) 2fr auto; gap: 1rem 2rem; align-items: baseline; padding: 1.2rem 0; border-bottom: 1px solid rgba(30, 21, 49, .15); }
+.pd-link-name { font-variation-settings: "wght" 800, "wdth" 88; font-size: 1.5rem; text-transform: uppercase; line-height: 1; }
+.pd-link-name:hover { color: var(--accent-deep); }
+.pd-link-note { color: var(--ink-3); font-size: 1rem; }
+.pd-link-code { font-variation-settings: "wght" 800, "wdth" 86; text-transform: uppercase; font-size: .85rem; color: var(--accent-deep); }
+.pd-quote { max-width: 60rem; margin: 0 auto 7rem; text-align: center; }
+.pd-quote p { font-family: var(--font-serif); font-size: 2.4rem; line-height: 1.15; margin: 0 0 1rem; }
+.pd-quote footer { text-transform: uppercase; font-size: .85rem; letter-spacing: .06em; color: var(--accent-deep); }
+@media (max-width: 767px) {
+  .pd-checklist { grid-template-columns: 1fr; }
+  .pd-link-row { grid-template-columns: 1fr; gap: .4rem; }
+  .pd-link-name { font-size: 1.2rem; }
+  .pd-quote p { font-size: 1.6rem; }
+  .record-status { font-size: .55rem; }
 }

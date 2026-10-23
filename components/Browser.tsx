@@ -6,7 +6,7 @@ export default function Browser({ host, href, children, className = "" }: {
     <div className={`browser ${className}`}>
       <div className="browser-bar">
         <i /><i /><i />
-        <span className="browser-url">{host}</span>
+        {host ? <span className="browser-url">{host}</span> : <span className="browser-url is-empty" />}
         {href && (
           <a className="browser-open" href={href} target="_blank" rel="noopener noreferrer">Open ↗</a>
         )}

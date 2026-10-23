@@ -1,5 +1,5 @@
 import { site } from "@/content/site";
-import { previewData, projectMedia } from "@/lib/projects";
+import { previewData, projectMedia, STATUS_LABEL } from "@/lib/projects";
 import ProjectPreview from "../ProjectPreview";
 import HL from "../HL";
 import { Arrow, Media, Roll } from "../ui";
@@ -44,6 +44,7 @@ export default function Projects() {
                   <span className="record-title"><Roll>{p.title}</Roll></span>
                   <span className="record-tags text-eyebrow">{p.tags}</span>
                   <span className="record-year text-eyebrow">{p.year}</span>
+                  <span className={`record-status text-eyebrow is-${p.status}`}>{STATUS_LABEL[p.status]}{p.company && p.status !== "open-source" ? ` · ${p.company}` : ""}</span>
                 </div>
               </a>
             );
@@ -52,8 +53,8 @@ export default function Projects() {
 
         <div className="cta-row">
           <HL className="text-cta font-brier">{site.projectsCta}</HL>
-          <a className="btn-w" href="#work">
-            <span className="btn-text"><Roll>View all work</Roll></span>
+          <a className="btn-w" href="#contact">
+            <span className="btn-text"><Roll>Let&apos;s talk</Roll></span>
             <span className="btn-arrow"><Arrow /></span>
           </a>
         </div>

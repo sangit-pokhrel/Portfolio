@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { site } from "@/content/site";
-import { embedUrl, getProject, hostOf, projectMedia } from "@/lib/projects";
+import { creditOf, embedUrl, getProject, hostOf, projectMedia, STATUS_LABEL } from "@/lib/projects";
 import Nav from "@/components/Nav";
 import SmoothScroll from "@/components/SmoothScroll";
 import BackToTop from "@/components/BackToTop";
@@ -27,9 +27,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const i = site.projects.indexOf(p);
   const next = site.projects[(i + 1) % site.projects.length];
   const media = projectMedia(p.slug);
-  const host = hostOf(p.live) || `${p.slug}.app`;
+  const host = hostOf(p.live) || hostOf(p.repo) || "";
   const demoEmbed = !media.video && p.demo ? embedUrl(p.demo) : undefined;
   const hasDemo = !!(media.video || demoEmbed);
+  // screenshots named "NN-<tag>-…" belong to the link with that tag (Client Websites)
+  const shotHost = (src: string) => {
+    const l = p.links?.find((x) => x.shot && src.includes(`-${x.shot}-`));
+    if (!l) return host;
+    return l.shot === "onlinehome" ? "onlinehome.com.np · archived" : hostOf(l.url);
+  };
+  const shotLink = (src: string) => p.links?.find((x) => x.shot && src.includes(`-${x.shot}-`))?.url ?? p.live;
 
   return (
     <>
@@ -41,9 +48,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <a href="/#work" className="pd-back"><span aria-hidden="true">←</span> <Roll>All work</Roll></a>
           <div className="text-eyebrow pd-eyebrow">
             <span className="pd-no">{String(i + 1).padStart(2, "0")}</span> Project · {p.year}
+            <span className={`pd-status is-${p.status}`}>{STATUS_LABEL[p.status]}</span>
           </div>
           <h1 className="pd-title">{p.title}</h1>
           <p className="pd-sum">{p.summary}</p>
+          <p className="pd-credit">{creditOf(p)}</p>
 
           <dl className="pd-meta">
             <div><dt className="text-eyebrow">Role</dt><dd>{p.role}</dd></div>
@@ -59,6 +68,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             )}
             {hasDemo && <a className="pd-link" href="#demo"><Roll>Watch demo</Roll></a>}
             {p.repo && <a className="pd-link" href={p.repo} target="_blank" rel="noopener noreferrer"><Roll>Code ↗</Roll></a>}
+            {p.archived && <a className="pd-link" href={p.archived} target="_blank" rel="noopener noreferrer"><Roll>Archived version ↗</Roll></a>}
+            {!p.live && !p.repo && !p.archived && <span className="pd-private">Private codebase · walkthrough on request</span>}
           </div>
         </header>
 
@@ -83,29 +94,18 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </section>
         )}
 
-        <section className="pd-block" id="demo" data-reveal>
-          <div className="pd-block-head">
-            <h2 className="pd-h2">Demo</h2>
-            {!hasDemo && (
-              <p className="pd-note">
-                Add a demo: drop <code>demo.mp4</code> into <code>public/images/projects/{p.slug}/</code>, or set{" "}
-                <code>demo</code> to a YouTube/Vimeo link in <code>content/site.ts</code>.
-              </p>
-            )}
-          </div>
-          <Browser host={host} className="is-demo">
-            {media.video ? (
-              <video src={media.video} poster={media.cover} controls playsInline preload="metadata" />
-            ) : demoEmbed ? (
-              <iframe src={demoEmbed} title={`${p.title}: demo video`} loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
-            ) : (
-              <div className="pd-demo-empty">
-                <Media src={media.images[1] ?? media.cover} seed={`d${i}`} accent={p.color} />
-                <span className="pd-play" aria-hidden="true">▶</span>
-              </div>
-            )}
-          </Browser>
-        </section>
+        {hasDemo && (
+          <section className="pd-block" id="demo" data-reveal>
+            <div className="pd-block-head"><h2 className="pd-h2">Demo</h2></div>
+            <Browser host={host} className="is-demo">
+              {media.video ? (
+                <video src={media.video} poster={media.cover} controls playsInline preload="metadata" />
+              ) : (
+                <iframe src={demoEmbed} title={`${p.title}: demo video`} loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
+              )}
+            </Browser>
+          </section>
+        )}
 
         <section className="pd-about" data-reveal>
           <h2 className="pd-h2">About the project</h2>
@@ -117,10 +117,39 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
 
+        <section className="pd-role" data-reveal>
+          <h2 className="pd-h2">What I did</h2>
+          <ul className="pd-checklist">
+            {p.myRole.map((r) => <li key={r}>{r}</li>)}
+          </ul>
+        </section>
+
+        {p.links && p.links.length > 0 && (
+          <section className="pd-links" data-reveal>
+            <h2 className="pd-h2">{p.slug === "client-websites" ? "The sites" : "Related work"}</h2>
+            <div className="pd-link-list">
+              {p.links.map((l) => (
+                <div className="pd-link-row" key={l.label}>
+                  <a href={l.url} target="_blank" rel="noopener noreferrer" className="pd-link-name"><Roll>{l.label}</Roll> <span aria-hidden="true">↗</span></a>
+                  {l.note && <span className="pd-link-note">{l.note}</span>}
+                  {l.repo && <a className="pd-link-code" href={l.repo} target="_blank" rel="noopener noreferrer">Code ↗</a>}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {p.quote && (
+          <blockquote className="pd-quote" data-reveal>
+            <p>“{p.quote.text}”</p>
+            <footer>{p.quote.by}{p.quote.role ? `, ${p.quote.role}` : ""}</footer>
+          </blockquote>
+        )}
+
         {media.images.length > 1 && (
           <section className="pd-gallery" data-reveal>
             {media.images.slice(1).map((src) => (
-              <Browser host={host} key={src}>
+              <Browser host={shotHost(src)} href={shotLink(src)} key={src}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={src} alt={`${p.title} screen`} loading="lazy" />
               </Browser>

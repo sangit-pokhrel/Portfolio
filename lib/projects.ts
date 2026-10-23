@@ -32,13 +32,23 @@ export const hostOf = (url?: string) => {
   try { return new URL(url).host.replace(/^www\./, ""); } catch { return url; }
 };
 
+export const STATUS_LABEL: Record<Project["status"], string> = {
+  "live": "Live", "in-progress": "In progress", "offline": "Offline · archived", "open-source": "Open source",
+};
+
+/** "Built at Artova Solutions · for Enlighten" style credit line. */
+export function creditOf(p: Project) {
+  if (p.credit) return p.credit;
+  return [p.company && `Built at ${p.company}`, p.client && `for ${p.client}`].filter(Boolean).join(" · ") || "Personal project";
+}
+
 /** Small data set the hover preview needs (sent to the client). */
 export function previewData(p: Project) {
   const m = projectMedia(p.slug);
   return {
     slug: p.slug, title: p.title, year: p.year, tags: p.tags, summary: p.summary, color: p.color,
-    images: m.images.slice(0, 4), host: hostOf(p.live) || `${p.slug}.app`,
-    hasLive: !!p.live, hasDemo: !!(p.demo || m.video),
+    images: m.images.slice(0, 4), host: hostOf(p.live) || hostOf(p.repo) || hostOf(p.archived),
+    status: STATUS_LABEL[p.status], credit: creditOf(p), hasDemo: !!(p.demo || m.video), hasCode: !!p.repo,
   };
 }
 export type PreviewData = ReturnType<typeof previewData>;

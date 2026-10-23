@@ -90,29 +90,36 @@ In `content/site.ts`, find the project inside `projects: [ … ]`:
 
 ```ts
 {
-  slug: "project-one",            // the page URL (/work/project-one) and the image folder name
-  title: "Project One",
-  year: "2025",
-  tags: "Next.js · Postgres",     // shown under the title
-  color: "#b57bff",               // colour of the record label and accents
+  slug: "artova-solutions",          // page URL (/work/artova-solutions) and image folder name
+  title: "Artova Solutions Platform",
+  year: "2024–now",
+  tags: "Next.js 15 · TypeScript · MongoDB",
+  color: "#b57bff",                  // record label colour
+  company: "Artova Solutions",       // shows "Built at Artova Solutions"
+  client: "Enlighten Research",      // optional: adds "for Enlighten Research"
+  credit: "BSc thesis · Coventry",   // optional: replaces that whole credit line
+  status: "live",                    // "live" | "in-progress" | "offline" | "open-source"
+  role: "Lead Software Engineer",
   summary: "One line for the hover preview.",
-  role: "Design & development",
   description: "A short paragraph for the project page.",
-  highlights: ["What you're proudest of", "A number that moved", "A hard problem you solved"],
-  live: "https://your-project.com",                 // "Visit live site" + the embedded live preview
-  demo: "https://www.youtube.com/watch?v=XXXXXXX",  // demo video (YouTube or Vimeo link)
-  repo: "https://github.com/sangit-pokhrel/your-repo",
+  myRole: ["Exactly what you built", "One line per responsibility"],   // "What I did" checklist
+  highlights: ["Used every day by 15+ staff", "…"],
+  live: "https://artovasolutions.com",   // "Visit live site" + the embedded live preview
+  archived: "https://web.archive.org/…",  // for sites that are gone
+  demo: "https://youtu.be/…",            // demo video (or drop demo.mp4 in the image folder)
+  repo: "https://github.com/…",          // PUBLIC repos only (private ones 404 for visitors)
+  links: [{ label: "Sister site", url: "https://…", note: "what it is" }],  // more sites
+  quote: { text: "…", by: "Name", role: "Client, Company" },   // a REAL line from a client
 },
 ```
 
-- **No live site?** Set `live: ""`. The button and the live preview disappear.
-- **No code to show?** Set `repo: ""`.
-- **Demo:** a YouTube or Vimeo link works (normal `watch?v=` links are fine), or see the video file
-  option below.
+- **No live site?** Leave `live` out. Projects with no live site, public code or archive show
+  "Private codebase · walkthrough on request" instead.
+- **Private repo?** Leave `repo` out.
+- **Quotes:** only add real ones (ask a manager or client for a line). There are none yet.
 
-> **Live preview looks blank?** Some sites (Google, GitHub, many banks…) refuse to be shown inside
-> another page. That's their setting, not a bug. Visitors can still use the "Open ↗" link in the
-> frame. Your own Vercel/Netlify sites normally embed fine.
+> **Live preview looks blank?** Some sites refuse to be shown inside another page. That's their
+> setting, not a bug. The "Open ↗" link in the frame still works.
 
 ### Change a project's cover picture
 
