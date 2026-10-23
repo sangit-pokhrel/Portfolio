@@ -49,6 +49,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <div className="text-eyebrow pd-eyebrow">
             <span className="pd-no">{String(i + 1).padStart(2, "0")}</span> Project · {p.year}
             <span className={`pd-status is-${p.status}`}>{STATUS_LABEL[p.status]}</span>
+            {p.demo_access && <span className="pd-status is-demo-login">Demo login</span>}
           </div>
           <h1 className="pd-title">{p.title}</h1>
           <p className="pd-sum">{p.summary}</p>
@@ -68,10 +69,33 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             )}
             {hasDemo && <a className="pd-link" href="#demo"><Roll>Watch demo</Roll></a>}
             {p.repo && <a className="pd-link" href={p.repo} target="_blank" rel="noopener noreferrer"><Roll>Code ↗</Roll></a>}
+            {p.demo_access && <a className="pd-link" href="#try"><Roll>Demo login ↓</Roll></a>}
             {p.archived && <a className="pd-link" href={p.archived} target="_blank" rel="noopener noreferrer"><Roll>Archived version ↗</Roll></a>}
             {!p.live && !p.repo && !p.archived && <span className="pd-private">Private codebase · walkthrough on request</span>}
           </div>
         </header>
+
+        {p.demo_access && (
+          <section className="pd-demo-box" data-reveal id="try">
+            <div>
+              <span className="text-eyebrow">Read-only demo · sample data</span>
+              <h2 className="pd-h2">Try it yourself</h2>
+              <p className="pd-note">{p.demo_access.note ?? "Log in with any role below and click around every page. Nothing can be changed, and none of the data is real."}</p>
+              <a className="btn-w" href={p.demo_access.url} target="_blank" rel="noopener noreferrer">
+                <span className="btn-text"><Roll>Open the demo</Roll></span><span className="btn-arrow"><Arrow /></span>
+              </a>
+            </div>
+            <div className="pd-logins">
+              {p.demo_access.logins.map((l) => (
+                <div className="pd-login" key={l.role}>
+                  <b>{l.role}</b>
+                  <code>{l.user}</code>
+                  <code>{l.pass}</code>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section className="pd-shot" data-reveal>
           <Browser host={host} href={p.live}>

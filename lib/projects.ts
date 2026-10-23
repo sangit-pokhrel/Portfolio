@@ -49,6 +49,7 @@ export function previewData(p: Project) {
     slug: p.slug, title: p.title, year: p.year, tags: p.tags, summary: p.summary, color: p.color,
     images: m.images.slice(0, 4), host: hostOf(p.live) || hostOf(p.repo) || hostOf(p.archived),
     status: STATUS_LABEL[p.status], credit: creditOf(p), hasDemo: !!(p.demo || m.video), hasCode: !!p.repo,
+    hasDemoLogin: !!p.demo_access,
   };
 }
 export type PreviewData = ReturnType<typeof previewData>;

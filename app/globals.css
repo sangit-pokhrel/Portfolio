@@ -1473,3 +1473,28 @@ button.s-card { padding: 0; border: 0; background: none; font: inherit; color: i
   .pd-quote p { font-size: 1.6rem; }
   .record-status { font-size: .55rem; }
 }
+
+/* demo-login label + box (only rendered when a project has demo_access) */
+.record-demo {
+  position: absolute; right: .7rem; top: .7rem; z-index: 2; padding: .3rem .55rem; border-radius: 2rem;
+  background: var(--ink); color: var(--accent); font-variation-settings: "wght" 800, "wdth" 86; font-size: .62rem; text-transform: uppercase;
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.pp-tags b.is-demo-login, .pd-status.is-demo-login { background: var(--ink); color: var(--accent); }
+.pd-status.is-demo-login::before { background: var(--accent); }
+.pd-demo-box {
+  max-width: 76rem; margin: 0 auto 4rem; padding: 2rem; border-radius: 1.4rem;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: center;
+  background: var(--ink); color: var(--white); box-shadow: 0 1.6rem 3rem rgba(30, 21, 49, .22);
+}
+.pd-demo-box .text-eyebrow { color: var(--accent); }
+.pd-demo-box .pd-h2 { margin: .5rem 0 .8rem; }
+.pd-demo-box .pd-note { color: var(--mist-2); margin-bottom: 1.4rem; }
+.pd-logins { display: flex; flex-direction: column; gap: .6rem; }
+.pd-login { display: grid; grid-template-columns: 7rem 1fr auto; gap: .8rem; align-items: center; padding: .8rem 1rem; border-radius: .8rem; background: rgba(246, 243, 250, .07); }
+.pd-login b { font-weight: 400; font-variation-settings: "wght" 800, "wdth" 88; text-transform: uppercase; font-size: .85rem; color: var(--accent); }
+.pd-login code { font-size: .85rem; color: var(--white); user-select: all; overflow-wrap: anywhere; }
+@media (max-width: 767px) {
+  .pd-demo-box { grid-template-columns: 1fr; padding: 1.4rem; }
+  .pd-login { grid-template-columns: 1fr; gap: .2rem; }
+}

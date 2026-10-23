@@ -90,6 +90,7 @@ export default function ProjectPreview({ projects }: { projects: PreviewData[] }
             <div className="pp-tags">
               <span>{p.tags}</span>
               <b>{p.status}</b>
+              {p.hasDemoLogin && <b className="is-demo-login">Demo login</b>}
               {p.hasCode && <b>Code</b>}
               {p.hasDemo && <b>Demo</b>}
             </div>

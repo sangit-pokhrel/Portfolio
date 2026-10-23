@@ -26,6 +26,8 @@ export type Project = {
   repo?: string;         // PUBLIC source code only (private repos would 404 for visitors)
   links?: { label: string; url: string; note?: string; repo?: string; shot?: string }[]; // more sites; shot = screenshot file tag
   quote?: { text: string; by: string; role?: string }; // a real line from a client or colleague
+  // Read-only demo: only fill this in once the demo is actually deployed and working.
+  demo_access?: { url: string; note?: string; logins: { role: string; user: string; pass: string }[] };
 };
 export type Social = { name: string; url: string };
 
@@ -185,6 +187,36 @@ export const site = {
       live: "https://himbarifoods.vercel.app",
     },
     {
+      slug: "cmarga", title: "Cmarga Real Estate", year: "2024–25", color: "#2bb673",
+      tags: "React · Django · SCSS",
+      company: "Cmarga Pvt Ltd", status: "live", role: "Frontend developer (contract)",
+      summary: "A real-estate platform for buying, selling and renting property in Nepal.",
+      description: "Cmarga helps people in Nepal buy, sell and rent property with confidence. I built the cmarga.com platform as one half of a two-person team: a React frontend on a Django backend, then stayed on after launch to ship new features and fix the bugs real users reported.",
+      myRole: [
+        "Built the cmarga.com frontend in React on a Django backend, in a team of two",
+        "Property search and listings for buying, renting and selling",
+        "Appointment booking and enquiry flows",
+        "Shipped new features and fixed user-reported bugs after launch",
+      ],
+      highlights: ["Live at cmarga.com", "Two-person team", "Kept improving it after launch"],
+      live: "https://cmarga.com",
+    },
+    {
+      slug: "online-home", title: "Online Home", year: "2025", color: "#36c2b4",
+      tags: "Next.js · Supabase · Prisma · PostgreSQL",
+      company: "Online Home Pvt Ltd", status: "offline", role: "Full-stack developer (contract)",
+      summary: "A property marketplace for Nepal: list, search and discover places to live on a map.",
+      description: "I built onlinehome.com.np end to end, from gathering requirements with the client to deployment, together with Ashok Neupane (I was the lead contributor). Owners list properties with photos, and buyers and renters search by location on an interactive map. The site has since been taken offline by the company; an archived copy is linked here.",
+      myRole: [
+        "Built the platform end to end: requirements, frontend, backend and deployment",
+        "Map-based property search with Leaflet and Google Places",
+        "Listing uploads with image compression and Cloudinary",
+        "Connected third-party services through their APIs and improved page load speed",
+      ],
+      highlights: ["Lead contributor (91 commits)", "Map-based property search", "Installable as an app (PWA)"],
+      archived: "https://web.archive.org/web/20260210125205/https://onlinehome.com.np/",
+    },
+    {
       slug: "ghargharko-doctor", title: "GharGharKo Doctor", year: "2025", color: "#5ec2a4",
       tags: "Next.js · React Query · Zod",
       company: "Artova Solutions", status: "live", role: "Full-stack developer",
@@ -198,6 +230,21 @@ export const site = {
       ],
       highlights: ["In daily use at a family-run clinic", "Keeps working when the internet drops", "QR-verified lab reports"],
       live: "https://testghar.sangitpokhrel.com.np",
+    },
+    {
+      slug: "deukhuri-public-school", title: "Deukhuri Public School", year: "2026", color: "#ef5b5b",
+      tags: "Next.js · Express · MongoDB · GSAP",
+      client: "Deukhuri Public School", credit: "Freelance · team of three · for Deukhuri Public School", status: "live", role: "Full-stack developer",
+      summary: "The website and school system for a school in Lamahi, Dang: admissions, academics, gallery and news, in Nepali and English.",
+      description: "Deukhuri Public School wanted a site that feels as warm as the school itself. With a team of three, I built a bilingual website (Nepali and English) with animated, smooth-scrolling pages, an admissions flow for the new academic year, school-visit booking, a gallery and latest updates, on top of a separate backend that powers the school's data.",
+      myRole: [
+        "Frontend in Next.js with GSAP and Lenis animations",
+        "Bilingual pages: Nepali and English",
+        "Admissions and school-visit booking flows",
+        "Express + MongoDB API with JWT auth, Swagger docs and automated tests, built with two teammates",
+      ],
+      highlights: ["Nursery to Grade 10 school", "Nepali + English", "Team of three"],
+      live: "https://dps-puce.vercel.app",
     },
     {
       slug: "sajilo-gaadi", title: "Sajilo Gaadi", year: "2026", color: "#ffd166",
@@ -226,20 +273,6 @@ export const site = {
       highlights: ["AI-powered CV feedback", "ATS optimisation", "Real-time updates"],
       live: "https://cv-analyser-backend-six.vercel.app",
       repo: "https://github.com/sangit-pokhrel/careersync",
-    },
-    {
-      slug: "rice-yield-prediction", title: "Rice Yield Prediction", year: "2025–26", color: "#e8b04a",
-      tags: "Python ML · React · Recharts",
-      company: "Coventry University", credit: "BSc (Hons) thesis · Coventry University", status: "open-source", role: "Researcher & developer",
-      summary: "BSc thesis: predicting rice yield in Dang Deukhuri, Nepal, from soil and rainfall data to help smallholder farmers.",
-      description: "Smallholder farmers in Dang Deukhuri plan each season with very little data. My thesis turns soil chemistry profiles and historical rainfall into yield predictions, wrapped in a web app farmers and advisers can actually use. Awarded with my BSc (Hons) Software Engineering in June 2026.",
-      myRole: [
-        "Data collection and feature engineering from soil and rainfall records",
-        "Trained and compared regression models; feature-importance analysis",
-        "Web decision-support app with maps and charts",
-      ],
-      highlights: ["BSc (Hons) thesis, awarded June 2026", "Real regional data from Dang Deukhuri", "Model + app, end to end"],
-      repo: "https://github.com/sangit-pokhrel/Rice_yield_Predictive-Modeling-ML---Sem-6",
     },
     {
       slug: "aussie-finance", title: "Aussie Finance & Home Loans", year: "2023–24", color: "#f5b642",
@@ -278,7 +311,7 @@ export const site = {
       slug: "client-websites", title: "Client Websites", year: "2023–26", color: "#5ec2a4",
       tags: "Next.js · React · Django",
       credit: "Freelance & contract work · Nepal and Australia", status: "live", role: "Design & development",
-      summary: "Production sites for clients in Nepal and Australia: cargo, real estate, a children's charity, a school and more.",
+      summary: "More production sites for clients in Nepal and Australia: cargo and logistics, a children's charity and a finance broker.",
       description: "Alongside product work I've delivered 10+ websites for clients in Nepal and Australia, usually owning everything from the first client call to deployment.",
       myRole: ["Requirements, design and build end to end", "Forms wired to Google Sheets and email, admin panels, donation flows", "Deployment and handover so clients can edit content"],
       highlights: ["10+ client websites", "Clients in Nepal and Australia", "First call to deployment"],
@@ -286,9 +319,6 @@ export const site = {
       links: [
         { label: "Moonlight Cargo", shot: "moonlight", url: "https://moonlightcargo.vercel.app", note: "Cargo & logistics · rate calculator, quote forms to Google Sheets" },
         { label: "Loving Heart Nepal", shot: "lovingheart", url: "https://lovingheartnepal.vercel.app", note: "Children's charity · QR donations, admin panel, blog" },
-        { label: "Deukhuri Public School", shot: "dps", url: "https://dps-puce.vercel.app", note: "School website · admissions and programmes" },
-        { label: "Cmarga Real Estate", shot: "cmarga", url: "https://cmarga.com", note: "Built at Cmarga Pvt Ltd · React + Django, team of two" },
-        { label: "Online Home", shot: "onlinehome", url: "http://web.archive.org/web/20260210125205/https://onlinehome.com.np/", note: "Property marketplace · contract · site now offline (archived copy)" },
         { label: "Destiny Finance & Home Loans", url: "https://github.com/sangit-pokhrel/destiny-revised", note: "Australian finance client · built, then rebuilt · site offline (code)" },
       ],
     },
