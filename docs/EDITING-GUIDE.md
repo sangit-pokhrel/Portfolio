@@ -153,7 +153,7 @@ The record numbers (A1, B1 …) and the "next project" links update automaticall
 
 ## Photos everywhere else
 
-**Hero and footer photo:** `public/images/me/portrait.png`.
+**Hero photo:** `public/images/me/portrait.png`. **Footer photo:** `public/images/me/footer.png` (falls back to the hero photo).
 It must be **already cut out** (transparent background, PNG). Use remove.bg, Canva, or your phone's
 "lift subject from background", then save over `portrait.png`. If you'd rather use a photo on a plain
 white wall, set `removeBackground: true` under `portrait` in `content/site.ts` and the site cuts it
@@ -202,6 +202,7 @@ All in `content/site.ts`:
 | Signature section text (scrolling rows) | `message.text` |
 | Big headline with one highlighted word | `legacy` (set `accent: true` on the highlighted word) |
 | "Now playing" card in the hero | `currently` |
+| Skill / service bubbles around the hero photo | `bubbles` (label, optional note, position; `m` = phone position) |
 | ON / OFF section | `split` |
 | Tech stack marquee | `stack` |
 | Scrolling bands between sections | `bands` |

@@ -89,6 +89,7 @@ export default function Experience() {
     ctx.add(() => {
       gsap.set(".hero-name-line > span", { yPercent: 105 });
       if (document.querySelector(".hero-portrait")) gsap.set(".hero-portrait", { yPercent: 12, opacity: 0 });
+      gsap.set("[data-bubble]", { scale: 0, opacity: 0 });
       gsap.fromTo(".loader-inner > :not(.loader-play)", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, stagger: 0.08, ease: "expo.out" });
     });
     // the track always "plays" for ~2s (so the splash is seen), then waits at 92% until the page is ready
@@ -124,6 +125,8 @@ export default function Experience() {
             if (document.querySelector(".hero-portrait")) gsap.to(".hero-portrait", { yPercent: 0, opacity: 1, duration: 1.6, ease: "expo.out" });
           }, "<0.15")
           .to("[data-hero-fade]", { opacity: 1, duration: 1, stagger: 0.1 }, "-=1")
+          // skill bubbles pop in around the photo, then GSAP hands them back to the CSS bob animation
+          .to("[data-bubble]", { scale: 1, opacity: 1, duration: 0.9, stagger: { each: 0.07, from: "random" }, ease: "back.out(2)", clearProps: "transform,opacity" }, "-=0.9")
           .add(() => {
             gsap.set("[data-loader]", { display: "none" });
             document.body.classList.remove("is-loading");

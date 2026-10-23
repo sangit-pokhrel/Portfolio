@@ -1,5 +1,5 @@
 import { site } from "@/content/site";
-import { portraitSrc } from "@/lib/images";
+import { listImages, portraitSrc } from "@/lib/images";
 import { signatureStrokes } from "@/lib/signature";
 import { Arrow, Roll } from "../ui";
 import Contours from "../Contours";
@@ -19,7 +19,8 @@ const PAGES = [
    signature over a two-tone headline, portrait rising from the bottom,
    links either side, a moving strip and the enquiries button. */
 export default function Footer() {
-  const photo = portraitSrc();
+  // footer photo: public/images/me/footer.* (falls back to the hero portrait)
+  const photo = listImages("me").find((u) => /\/footer\./i.test(u)) ?? portraitSrc();
   return (
     <footer className="footer" id="contact" data-theme-nav="light">
       <span className="footer-tab" aria-hidden="true" />

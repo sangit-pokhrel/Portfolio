@@ -48,6 +48,23 @@ export const site = {
     turn: 1,
   },
 
+  // Floating bubbles around your hero photo: services (big) and skills (small).
+  // x / y = position in % of the hero; depth = how much it drifts with the mouse;
+  // m = [x, y] position on phones (bubbles without m are hidden on phones).
+  bubbles: [
+    { label: "Web apps", note: "end-to-end", kind: "service", x: 20, y: 26, depth: 1.4 , m: [21, 37] },
+    { label: "Mobile apps", note: "Flutter", kind: "service", x: 79, y: 24, depth: 1.2 , m: [79, 35] },
+    { label: "APIs & backends", note: "fast & secure", kind: "service", x: 13, y: 52, depth: 0.9 , m: [20, 51] },
+    { label: "UI / UX", note: "design → code", kind: "service", x: 86, y: 52, depth: 1.1 , m: [81, 50] },
+    { label: "Next.js", kind: "skill", x: 32, y: 14, depth: 0.7 , m: [18, 65] },
+    { label: "React", kind: "skill", x: 67, y: 13, depth: 0.8 , m: [83, 64] },
+    { label: "TypeScript", kind: "skill", x: 30, y: 40, depth: 1.6 },
+    { label: "Node.js", kind: "skill", x: 70, y: 39, depth: 1.5 },
+    { label: "Python · Django", kind: "skill", x: 24, y: 70, depth: 1.0 },
+    { label: "AI / ML", kind: "skill", x: 77, y: 70, depth: 1.3 },
+    { label: "♪ Music", kind: "skill", x: 63, y: 84, depth: 0.6 },
+  ] as { label: string; note?: string; kind: "service" | "skill"; x: number; y: number; depth: number; m?: [number, number] }[],
+
   // Bottom-right "unmute me" widget: put your recording at public/audio/story.mp3
   story: {
     src: "/audio/story.mp3",

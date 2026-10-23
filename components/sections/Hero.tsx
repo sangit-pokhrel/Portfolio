@@ -3,6 +3,7 @@ import { portraitSrc } from "@/lib/images";
 import PortraitCanvas from "../PortraitCanvas";
 import PortraitImage from "../PortraitImage";
 import HeroWater from "../HeroWater";
+import HeroBubbles from "../HeroBubbles";
 
 export default function Hero() {
   const src = portraitSrc();
@@ -17,6 +18,7 @@ export default function Hero() {
         {src && site.portrait.mode === "2d" && (
           <PortraitImage src={src} alt={`${site.firstName} ${site.lastName}`} removeBackground={site.portrait.removeBackground} />
         )}
+        <HeroBubbles />
         {src && site.portrait.mode === "3d" && (
           <PortraitCanvas
             src={src}

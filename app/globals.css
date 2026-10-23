@@ -349,7 +349,7 @@ body.menu-open .nav-burger span:nth-child(2) { transform: rotate(-45deg); }
 
 /* 2D portrait: standing at the bottom, cropped by the viewport like the reference */
 .hero-portrait-move {
-  position: absolute; left: 0; right: 0; top: 5vh; bottom: 0; z-index: 2;
+  position: absolute; left: 0; right: 0; top: 15vh; bottom: 0; z-index: 2;
   display: flex; justify-content: center; align-items: flex-end;
   pointer-events: none; transform-origin: 50% 100%;
 }
@@ -1358,3 +1358,68 @@ button.s-card { padding: 0; border: 0; background: none; font: inherit; color: i
 @keyframes ctaPulse { 50% { transform: scale(1.06); } }
 
 @media (max-width: 767px) { .sc { font-size: .68rem; } }
+
+/* ==========================================================================
+   Hero skill / service bubbles (glassy "cloud" around the photo)
+   ========================================================================== */
+.hero-bubbles { position: absolute; inset: 0; z-index: 3; pointer-events: none; --mx: 0; --my: 0; }
+.bubble {
+  position: absolute; left: var(--x); top: var(--y); pointer-events: auto;
+  transform: translate(-50%, -50%) translate(calc(var(--mx) * var(--depth) * -18px), calc(var(--my) * var(--depth) * -14px));
+}
+.bubble-in {
+  position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  white-space: nowrap; border-radius: 999px; color: var(--ink); cursor: default;
+  background:
+    radial-gradient(120% 90% at 30% 20%, rgba(255, 255, 255, .95), rgba(255, 255, 255, .55) 45%, rgba(236, 228, 248, .5) 100%);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4); backdrop-filter: blur(10px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, .8);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .9), inset 0 -.5rem 1rem rgba(181, 123, 255, .12),
+    0 .8rem 2rem rgba(30, 21, 49, .12), 0 0 0 .35rem rgba(255, 255, 255, .18);
+  animation: bubbleBob var(--bob) ease-in-out var(--delay) infinite;
+  transition: transform .6s var(--ease), box-shadow .6s var(--ease), background-color .4s;
+}
+/* soft "cloud puff" behind each bubble */
+.bubble-in::before {
+  content: ""; position: absolute; inset: -.5rem -.9rem; z-index: -1; border-radius: inherit;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, .7), rgba(255, 255, 255, 0));
+  filter: blur(6px);
+}
+/* glossy highlight */
+.bubble-in::after {
+  content: ""; position: absolute; left: 14%; top: 12%; width: 30%; height: 26%; border-radius: 50%;
+  background: rgba(255, 255, 255, .85); filter: blur(2px); opacity: .7; pointer-events: none;
+}
+@keyframes bubbleBob {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(.25rem, -.55rem); }
+  66% { transform: translate(-.3rem, .3rem); }
+}
+.bubble.is-service .bubble-in { padding: .9rem 1.5rem; gap: .15rem; }
+.bubble.is-service .bubble-label { font-variation-settings: "wght" 800, "wdth" 90; font-size: 1.15rem; text-transform: uppercase; letter-spacing: -.01em; line-height: 1; }
+.bubble-note { font-size: .7rem; color: var(--accent-deep); font-variation-settings: "wght" 650; text-transform: uppercase; letter-spacing: .06em; }
+.bubble.is-skill .bubble-in { padding: .55rem 1rem; }
+.bubble.is-skill .bubble-label { font-variation-settings: "wght" 650, "wdth" 100; font-size: .85rem; }
+.bubble:hover { z-index: 2; }
+.bubble:hover .bubble-in {
+  animation-play-state: paused; transform: scale(1.12);
+  background-color: var(--accent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 1rem 2.4rem rgba(181, 123, 255, .35), 0 0 0 .4rem rgba(181, 123, 255, .25);
+}
+.bubble:hover .bubble-in { background: radial-gradient(120% 90% at 30% 20%, #fff, var(--accent) 70%); }
+
+@media (max-width: 991px) {
+  .bubble.is-service .bubble-in { padding: .7rem 1.1rem; }
+  .bubble.is-service .bubble-label { font-size: .95rem; }
+}
+@media (max-width: 767px) {
+  /* phones: a smaller ring of bubbles around the photo, fewer of them */
+  .bubble { left: var(--xm, var(--x)); top: var(--ym, var(--y)); }
+  .bubble:not(.has-m) { display: none; }
+  .bubble.is-service .bubble-in { padding: .5rem .8rem; }
+  .bubble.is-service .bubble-label { font-size: .72rem; }
+  .bubble-note { display: none; }
+  .bubble.is-skill .bubble-in { padding: .35rem .65rem; }
+  .bubble.is-skill .bubble-label { font-size: .66rem; }
+}
