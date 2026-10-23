@@ -4,7 +4,7 @@
    (see README "Adding images"). They are picked up automatically.
    ========================================================================== */
 
-export type ProjectStatus = "live" | "in-progress" | "offline" | "open-source";
+export type ProjectStatus = "live" | "in-progress" | "offline" | "open-source" | "delivered";
 export type Project = {
   slug: string;          // URL: /work/<slug>  ·  images: public/images/projects/<slug>/
   title: string;
@@ -242,19 +242,17 @@ export const site = {
       repo: "https://github.com/sangit-pokhrel/Rice_yield_Predictive-Modeling-ML---Sem-6",
     },
     {
-      slug: "mymeridianone", title: "MyMeridianOne", year: "2026", color: "#c0392b",
-      tags: "Next.js 16 · MongoDB · Socket.IO · Docker",
-      credit: "Personal project · simulated money, no real accounts", status: "live", role: "Solo project",
-      summary: "A full-stack banking demo: customer dashboard, back-office admin, approval workflows and live support chat.",
-      description: "A complete banking platform built to show what a real product needs end to end: a customer dashboard, a visually distinct admin console with full CRUD over every entity, request and approval workflows, threaded support, and analytics. All money movement is simulated; no real accounts or personal data are involved.",
+      slug: "aussie-finance", title: "Aussie Finance & Home Loans", year: "2023–24", color: "#f5b642",
+      tags: "HTML · CSS · JavaScript",
+      client: "Aussie Finance & Home Loans", credit: "Freelance · Australian finance client", status: "delivered", role: "Frontend developer",
+      summary: "The first version of the website for an Australian mortgage and home-loan broker.",
+      description: "My first international client: a home-loan and finance broker in Australia. I built the first version of their website, working remotely and taking it from the brief to a site their customers could use to understand their loan options and get in touch.",
       myRole: [
-        "Customer and admin auth with role-based route protection (JWT, bcrypt)",
-        "Request / approval workflows and analytics with Recharts",
-        "Live admin-to-customer chat over Socket.IO on a custom Next.js server",
-        "One-command Docker setup",
+        "Built the first version of the website, frontend end to end",
+        "Responsive layouts for loan services and enquiry pages",
+        "Worked remotely with an overseas client from brief to handover",
       ],
-      highlights: ["Full customer + admin product", "Real-time support chat", "Runs with one Docker command"],
-      live: "https://meridian-trust.vercel.app",
+      highlights: ["First international client", "Australian finance sector", "Remote, brief to handover"],
     },
     {
       slug: "gallero", title: "Gallero", year: "2026", color: "#9d6bff",

@@ -33,7 +33,7 @@ export const hostOf = (url?: string) => {
 };
 
 export const STATUS_LABEL: Record<Project["status"], string> = {
-  "live": "Live", "in-progress": "In progress", "offline": "Offline · archived", "open-source": "Open source",
+  "live": "Live", "in-progress": "In progress", "offline": "Offline · archived", "open-source": "Open source", "delivered": "Delivered",
 };
 
 /** "Built at Artova Solutions · for Enlighten" style credit line. */

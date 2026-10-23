@@ -544,7 +544,8 @@ body.menu-open .nav-burger span:nth-child(2) { transform: rotate(-45deg); }
 .projects { padding: 10rem 0 8rem; }
 .projects-eyebrow { display: inline-block; margin-bottom: 1.2rem; }
 .projects .text-body { color: var(--ink-3); }
-.crate { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4rem var(--gap); }
+/* minmax(0,1fr): long titles can never widen a column, so every record is the same size */
+.crate { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4rem var(--gap); }
 .record { display: block; position: relative; --label: var(--accent); }
 .record-stage { position: relative; width: 74%; aspect-ratio: 1; }
 .record-sleeve {
@@ -595,7 +596,10 @@ body.menu-open .nav-burger span:nth-child(2) { transform: rotate(-45deg); }
 .record-no { background: var(--ink); color: var(--accent); padding: .25rem .35rem; border-radius: .2rem; }
 .record-title { font-variation-settings: "wght" 750, "wdth" 93; font-size: 1.35rem; line-height: 1; text-transform: uppercase; }
 .record-no { grid-row: 1; grid-column: 1; }
-.record-title { grid-row: 1; grid-column: 2; }
+.record-title { grid-row: 1; grid-column: 2; min-width: 0; overflow-wrap: anywhere; }
+.record-title .roll { white-space: normal; } /* long titles wrap instead of spilling into the next card */
+.record { min-width: 0; }
+.record-tags, .record-status { min-width: 0; overflow-wrap: anywhere; }
 .record-year { grid-row: 1; grid-column: 3; opacity: .6; white-space: nowrap; }
 .record-tags { grid-row: 2; grid-column: 2 / 4; opacity: .55; }
 .cta-row { display: flex; justify-content: space-between; align-items: center; gap: 2rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(30, 21, 49, .15); }
@@ -786,7 +790,7 @@ body.menu-open .nav-burger span:nth-child(2) { transform: rotate(-45deg); }
   .menu-images { display: none; }
   .menu-side { align-items: flex-start; text-align: left; }
   .menu-socials { align-items: flex-start; }
-  .crate { grid-template-columns: repeat(2, 1fr); }
+  .crate { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .split-half.is-left { padding-right: var(--gap); }
   .split-half.is-right { padding-left: var(--gap); }
   .split { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
@@ -1150,7 +1154,7 @@ body.menu-open .to-top { opacity: 0; pointer-events: none; }
   .logo-wave { display: none; }
   .text-impact-lg { font-size: 2.8rem; }
   .footer-title { font-size: 2.3rem; }
-  .crate { grid-template-columns: 1fr 1fr; column-gap: .75rem; }
+  .crate { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: .75rem; }
 }
 
 /* ==========================================================================
@@ -1433,6 +1437,7 @@ button.s-card { padding: 0; border: 0; background: none; font: inherit; color: i
 .is-in-progress { color: #c98a00; }
 .is-offline { color: #8a7f9b; }
 .is-open-source { color: var(--accent-deep); }
+.is-delivered { color: #3f7fd6; }
 .record-status.is-live::before, .pd-status.is-live::before { box-shadow: 0 0 0 0 rgba(46, 155, 106, .5); animation: livePulse 2s infinite; }
 @keyframes livePulse { 0% { box-shadow: 0 0 0 0 rgba(46, 155, 106, .5); } 70% { box-shadow: 0 0 0 .45rem rgba(46, 155, 106, 0); } 100% { box-shadow: 0 0 0 0 rgba(46, 155, 106, 0); } }
 
