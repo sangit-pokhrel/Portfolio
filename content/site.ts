@@ -97,7 +97,7 @@ export const site = {
     "It doesn't matter where you start, it matters how hard you keep pushing.",
     "Since I wrote my first line of code, I've worked to turn ideas into things people actually use.",
   ],
-  galleryBadge: { text: "1", label: "first place" },
+  galleryBadge: { text: "2", label: "runner-up · TriCode" },
 
   split: {
     left: { top: "ON", bottom: "CODE", text: "Most recent work, case studies and shipped products.", url: "#work" },
