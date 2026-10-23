@@ -44,7 +44,7 @@ export default function Footer() {
         )}
 
         <nav className="footer-col is-left" aria-label="Pages">
-          <div className="text-eyebrow">Pages</div>
+          <div className="text-eyebrow">Pages we worked on</div>
           {PAGES.map((p) => (
             <a key={p.href} href={p.href} className="footer-link"><Roll>{p.label}</Roll></a>
           ))}
