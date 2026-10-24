@@ -35,7 +35,7 @@ export default function Projects() {
                     </div>
                   </div>
                   <div className="record-sleeve">
-                    {p.demo_access && <span className="record-demo">Try the demo</span>}
+                    {p.demo_access && <span className="record-demo">Demo account</span>}
                     <Media src={projectMedia(p.slug).cover} seed={`p${i}${p.title}`} accent={p.color} alt={p.title} />
                     <span className="record-side text-eyebrow">{i % 2 ? "B" : "A"}{Math.floor(i / 2) + 1}</span>
                   </div>

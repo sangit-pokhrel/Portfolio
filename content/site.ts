@@ -27,7 +27,9 @@ export type Project = {
   links?: { label: string; url: string; note?: string; repo?: string; shot?: string }[]; // more sites; shot = screenshot file tag
   quote?: { text: string; by: string; role?: string }; // a real line from a client or colleague
   // Read-only demo: only fill this in once the demo is actually deployed and working.
-  demo_access?: { url: string; note?: string; logins: { role: string; user: string; pass: string }[] };
+  // Read-only demo with sample data. Leave `url` out until the demo is deployed: the label and
+  // logins still show, with an "ask for access" button instead of "Open the demo".
+  demo_access?: { url?: string; note?: string; logins: { role: string; user: string; pass: string }[] };
 };
 export type Social = { name: string; url: string };
 
@@ -123,6 +125,15 @@ export const site = {
   projects: [
     {
       slug: "artova-solutions", title: "Artova Solutions Platform", year: "2024–now", color: "#b57bff",
+      demo_access: {
+        logins: [
+          { role: "Super admin", user: "superadmin@demo.artova.com", pass: "demo1234" },
+          { role: "Manager", user: "manager@demo.artova.com", pass: "demo1234" },
+          { role: "Receptionist", user: "reception@demo.artova.com", pass: "demo1234" },
+          { role: "Content creator", user: "content@demo.artova.com", pass: "demo1234" },
+          { role: "Intern", user: "intern@demo.artova.com", pass: "demo1234" },
+        ],
+      },
       tags: "Next.js 15 · TypeScript · MongoDB",
       company: "Artova Solutions", status: "live", role: "Lead Software Engineer",
       summary: "The company's site, blog, admin dashboard and intern portal, with attendance, billing and verifiable certificates.",
@@ -218,6 +229,15 @@ export const site = {
     },
     {
       slug: "ghargharko-doctor", title: "GharGharKo Doctor", year: "2024–26", color: "#5ec2a4",
+      demo_access: {
+        logins: [
+          { role: "Clinic admin", user: "admin", pass: "demo1234" },
+          { role: "Doctor", user: "doctor1", pass: "demo1234" },
+          { role: "Receptionist", user: "receptionist", pass: "demo1234" },
+          { role: "Lab technician", user: "labtech", pass: "demo1234" },
+          { role: "Platform owner", user: "superadmin", pass: "demo1234" },
+        ],
+      },
       tags: "Spring Boot · PostgreSQL · React",
       credit: "Started as a university project · lead developer · now used at a family-run clinic", status: "live", role: "Lead developer",
       summary: "A multi-clinic management platform: patients, appointments, lab, pharmacy stock, billing and reports, with separate portals for staff, patients and suppliers.",
@@ -235,17 +255,28 @@ export const site = {
     },
     {
       slug: "deukhuri-public-school", title: "Deukhuri Public School", year: "2026", color: "#ef5b5b",
-      tags: "Next.js · Express · MongoDB · GSAP",
+      demo_access: {
+        logins: [
+          { role: "School admin", user: "demo.admin", pass: "Demo@12345" },
+          { role: "Website admin", user: "demo.webadmin", pass: "Demo@12345" },
+          { role: "Teacher", user: "demo.teacher1", pass: "Demo@12345" },
+          { role: "Accountant", user: "demo.accountant1", pass: "Demo@12345" },
+          { role: "Exam coordinator", user: "demo.examcoordinator", pass: "Demo@12345" },
+        ],
+      },
+      tags: "Next.js · Express · MongoDB · LMS",
       client: "Deukhuri Public School", credit: "Freelance · team of three · for Deukhuri Public School", status: "live", role: "Full-stack developer",
-      summary: "The website and school system for a school in Lamahi, Dang: admissions, academics, gallery and news, in Nepali and English.",
-      description: "Deukhuri Public School wanted a site that feels as warm as the school itself. With a team of three, I built a bilingual website (Nepali and English) with animated, smooth-scrolling pages, an admissions flow for the new academic year, school-visit booking, a gallery and latest updates, on top of a separate backend that powers the school's data.",
+      summary: "The website and full school management system for a school in Lamahi, Dang, now a platform that can run many schools.",
+      description: "Deukhuri Public School wanted a site that feels as warm as the school itself, and a system to run the school behind it. With a team of three, I built a bilingual website (Nepali and English) with admissions and school-visit booking, and a management system for students, attendance, exams and mark sheets, fees and receipts, and certificates. It has since grown into a platform: a Super Admin console that sets up and runs several schools, plus an LMS whose modules are generated from a single feature catalog.",
       myRole: [
-        "Frontend in Next.js with GSAP and Lenis animations",
-        "Bilingual pages: Nepali and English",
-        "Admissions and school-visit booking flows",
-        "Express + MongoDB API with JWT auth, Swagger docs and automated tests, built with two teammates",
+        "Frontend in Next.js with GSAP and Lenis animations, in Nepali and English",
+        "School system: students, attendance, exams, admit cards, mark sheets, fees, receipts and certificates",
+        "Roles and permissions, audit log, Excel import and export",
+        "Super Admin console to onboard and manage multiple schools",
+        "Catalog-driven LMS: add a feature by adding one entry",
+        "Express + MongoDB API with JWT auth, Swagger docs and automated tests",
       ],
-      highlights: ["Nursery to Grade 10 school", "Nepali + English", "Team of three"],
+      highlights: ["Multi-school platform", "School system + LMS", "Nepali + English", "Team of three"],
       live: "https://dps-puce.vercel.app",
     },
     {
@@ -263,6 +294,14 @@ export const site = {
     },
     {
       slug: "careersync", title: "CareerSync", year: "2025–26", color: "#4fc3ff",
+      demo_access: {
+        logins: [
+          { role: "Job seeker", user: "seeker@demo.careersync.app", pass: "Demo@1234" },
+          { role: "Recruiter", user: "recruiter@demo.careersync.app", pass: "Demo@1234" },
+          { role: "Career coach", user: "coach@demo.careersync.app", pass: "Demo@1234" },
+          { role: "Admin", user: "admin@demo.careersync.app", pass: "Demo@1234" },
+        ],
+      },
       tags: "Next.js · React Query · Socket.IO · Chart.js",
       company: "Artova Solutions", status: "live", role: "Full-stack developer",
       summary: "AI résumé analyser: upload a CV, get ATS-focused feedback and matching job listings.",

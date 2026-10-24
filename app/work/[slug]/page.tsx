@@ -49,7 +49,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <div className="text-eyebrow pd-eyebrow">
             <span className="pd-no">{String(i + 1).padStart(2, "0")}</span> Project · {p.year}
             <span className={`pd-status is-${p.status}`}>{STATUS_LABEL[p.status]}</span>
-            {p.demo_access && <span className="pd-status is-demo-login">Demo login</span>}
+            {p.demo_access && <span className="pd-status is-demo-login">Demo account</span>}
           </div>
           <h1 className="pd-title">{p.title}</h1>
           <p className="pd-sum">{p.summary}</p>
@@ -69,7 +69,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             )}
             {hasDemo && <a className="pd-link" href="#demo"><Roll>Watch demo</Roll></a>}
             {p.repo && <a className="pd-link" href={p.repo} target="_blank" rel="noopener noreferrer"><Roll>Code ↗</Roll></a>}
-            {p.demo_access && <a className="pd-link" href="#try"><Roll>Demo login ↓</Roll></a>}
+            {p.demo_access && <a className="pd-link" href="#try"><Roll>Demo account ↓</Roll></a>}
             {p.archived && <a className="pd-link" href={p.archived} target="_blank" rel="noopener noreferrer"><Roll>Archived version ↗</Roll></a>}
             {!p.live && !p.repo && !p.archived && <span className="pd-private">Private codebase · walkthrough on request</span>}
           </div>
@@ -80,10 +80,21 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <div>
               <span className="text-eyebrow">Read-only demo · sample data</span>
               <h2 className="pd-h2">Try it yourself</h2>
-              <p className="pd-note">{p.demo_access.note ?? "Log in with any role below and click around every page. Nothing can be changed, and none of the data is real."}</p>
-              <a className="btn-w" href={p.demo_access.url} target="_blank" rel="noopener noreferrer">
-                <span className="btn-text"><Roll>Open the demo</Roll></span><span className="btn-arrow"><Arrow /></span>
-              </a>
+              <p className="pd-note">
+                {p.demo_access.note ??
+                  (p.demo_access.url
+                    ? "Log in with any role below and click around every page. Nothing can be changed, and none of the data is real."
+                    : "A read-only copy with sample data, one login per role below. It's being deployed now; email me and I'll send you the link.")}
+              </p>
+              {p.demo_access.url ? (
+                <a className="btn-w" href={p.demo_access.url} target="_blank" rel="noopener noreferrer">
+                  <span className="btn-text"><Roll>Open the demo</Roll></span><span className="btn-arrow"><Arrow /></span>
+                </a>
+              ) : (
+                <a className="btn-w" href={`mailto:${site.email}?subject=${encodeURIComponent(`Demo access: ${p.title}`)}`}>
+                  <span className="btn-text"><Roll>Ask for access</Roll></span><span className="btn-arrow"><Arrow /></span>
+                </a>
+              )}
             </div>
             <div className="pd-logins">
               {p.demo_access.logins.map((l) => (
